@@ -1,0 +1,42 @@
+﻿@using DataLinker.Web.Helpers
+@model DataLinker.Models.BuildLicenseModel
+
+<h3>
+    New license for @Model.SchemaName
+    <span class="pull-right">
+        <a href="@ViewBag.PreviousUrl" class="btn btn-default">
+            <span class="glyphicon glyphicon-chevron-left"></span> Back
+        </a>
+    </span>
+</h3>
+<h3>
+    <small>
+        This section lets you set your Data Agreement terms. You can select the terms from the below template or choose Custom to upload your own Data Agreement file in pdf format.
+    </small>
+</h3>
+
+<!-- Nav tabs -->
+<ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#templated" role="tab" data-toggle="tab">Template</a></li>
+    <li role="presentation"><a href="#custom" role="tab" data-toggle="tab">Custom</a></li>
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content license-tab-content">
+    <div role="tabpanel" class="tab-pane active" id="templated">
+        @Html.Partial("_ProviderTemplatedTab", Model)
+    </div>
+    <div role="tabpanel" class="tab-pane" id="custom">
+        @Html.Partial("_ProviderCustomTab")
+    </div>
+</div>
+
+<br />
+<br />
+<br />
+@Html.Partial("_HelpDetails")
+
+@section scripts
+{
+    @Html.InitPageMainModule(string.Empty)
+}

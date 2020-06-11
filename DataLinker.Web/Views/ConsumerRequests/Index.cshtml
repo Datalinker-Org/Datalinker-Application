@@ -1,0 +1,71 @@
+﻿@using DataLinker.Web.Helpers
+@using PagedList.Mvc;
+
+@model PagedList.IPagedList<DataLinker.Models.ConsumerRequestModel>
+
+<div id="consumer-requests-ui">
+    <h2>
+        Consumer registration requests
+        <span class="pull-right">
+            <a href="@ViewBag.PreviousUrl" class="btn btn-default">
+                <span class="glyphicon glyphicon-chevron-left"></span> Back
+            </a>
+        </span>
+    </h2>
+    <div class="jumbotron">
+        <p style="margin: 0 0 0">
+            Approve or decline consumer registration for your aggregate schema endpoints here
+        </p>
+    </div>
+    @if (Model.Any())
+    {
+        <table class="table">
+            <tr>
+                <th>
+                    Consumer Name
+                </th>
+                <th>Created At</th>
+                <th>
+                    Schema
+                </th>
+                <th></th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ConsumerName)
+                    </td>
+                    <td>@Html.DisplayFor(model => item.CreatedAt)</td>
+                    <td>@Html.DisplayFor(model => item.SchemaName)</td>
+                    <td>
+                        <div class="btn-group btn-group-xs">
+                            <button type="button" class="btn btn-danger btn-xs" id="decline-consumer-request" data-id="@item.Id" data-url="@Url.Action("Decline", new {id = item.Id})">
+                                <span class="glyphicon glyphicon-remove"></span> Reject
+                            </button>
+                            <button type="button" class="btn btn-success btn-xs" id="approve-consumer-request" data-id="@item.Id" data-url="@Url.Action("Approve", new {id = item.Id})">
+                                <span class="glyphicon glyphicon-ok"></span> Confirm
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </table>
+    }
+    else
+    {
+        <h4> No data to display </h4>
+        <br/>
+        <br/>
+    }
+    @if (Model.PageCount > 1)
+    {
+        @Html.PagedListPager(Model, page => Url.Action("Index", "ConsumerRequests",
+            new {page}))
+    }
+    @Html.Partial("_HelpDetails")
+</div>
+@section scripts
+{
+    @Html.InitPageMainModule("consumerRequests")
+}

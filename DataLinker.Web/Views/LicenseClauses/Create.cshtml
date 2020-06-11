@@ -1,0 +1,75 @@
+﻿@using DataLinker.Web.Helpers
+@model DataLinker.Models.LicenseClauseTemplateModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Section "@Model.SectionName"
+    <span class="pull-right">
+        <a href="@ViewBag.PreviousUrl" class="btn btn-default">
+            <span class="glyphicon glyphicon-chevron-left"></span> Back
+        </a>
+    </span>
+    </h2>
+<h3>New clause</h3>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <hr />
+
+        @Html.HiddenFor(model => model.LicenseSectionId, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.HiddenFor(model => model.LicenseSectionId, new { htmlAttributes = new { @class = "form-control" } })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ShortText, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.ShortText, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ShortText, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.LegalText, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.TextAreaFor(model => model.LegalText, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.LegalText, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new {@class = "control-label col-md-2"})
+            <div class="col-md-4">
+                @Html.TextAreaFor(model => model.Description, new {@class = "form-control"})
+                @Html.ValidationMessageFor(model => model.Description, "", new {@class = "text-danger"})
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Version, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.DisplayFor(model => model.Version, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-4">
+                @Html.StatusLabelTemplate(Model.Status)
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-4">
+                <input type="submit" value="Create" class="btn btn-success" />
+                @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-default" })
+            </div>
+        </div>
+    </div>
+}
+@section scripts
+{
+    @Html.InitPageMainModule(string.Empty)
+}

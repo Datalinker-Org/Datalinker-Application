@@ -1,0 +1,26 @@
+﻿@using DataLinker.Web.Helpers
+@using DataLinker.Web.Models.Applications
+@model DataLinker.Models.ApplicationDetails
+
+@{
+    ViewBag.Title = "Service Details";
+}
+
+<div id="applications-ui" data-application-id="@Model.ID">
+    @if (Model.IsProvider)
+    {
+        @Html.Partial("_ProviderDetails", Model);
+    }
+    else
+    {
+        @Html.Partial("_ConsumerDetails", Model)    ;
+    }
+    <div class="edit-application-details-modal-location"></div>
+    @Html.Partial("_HelpDetails")
+    @Html.Partial("_HostKey")
+    @Html.Partial("_CreateHost", new ApplicationDetails())
+</div>
+@section scripts {
+
+@Html.InitPageMainModule("../views/application-details")
+}

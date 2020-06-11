@@ -1,0 +1,89 @@
+﻿@using DataLinker.Models.Enums
+@using DataLinker.Web.Helpers
+@model DataLinker.Models.LicenseClauseTemplateModel
+
+@{
+    ViewBag.Title = "Edit";
+}
+<h2>
+    Section "@Model.SectionName"
+    <span class="pull-right">
+        <a href="@ViewBag.PreviousUrl" class="btn btn-default">
+            <span class="glyphicon glyphicon-chevron-left"></span> Back
+        </a>
+    </span>
+</h2>
+<h3>Edit clause</h3>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr/>
+        @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+        @Html.HiddenFor(model => model.ID)
+        @Html.HiddenFor(model => model.LicenseSectionId)
+        @Html.HiddenFor(model => model.LicenseClauseId)
+        @Html.HiddenFor(model => model.Status)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ShortText, htmlAttributes: new {@class = "control-label col-md-2"})
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.ShortText, new {htmlAttributes = new {@class = "form-control"}})
+                @Html.ValidationMessageFor(model => model.ShortText, "", new {@class = "text-danger"})
+            </div>
+        </div>
+
+        @if (Model.Status == TemplateStatus.Active)
+        {
+            <div class="form-group">
+                @Html.LabelFor(model => model.LegalText, htmlAttributes: new {@class = "control-label col-md-2"})
+                <div class="col-md-4">
+                    @Html.DisplayFor(model => model.LegalText, new {htmlAttributes = new {@class = "form-control"}})
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="form-group">
+                @Html.LabelFor(model => model.LegalText, htmlAttributes: new {@class = "control-label col-md-2"})
+                <div class="col-md-4">
+                    @Html.TextAreaFor(model => model.LegalText, new { @class = "form-control"})
+                    @Html.ValidationMessageFor(model => model.LegalText, "", new {@class = "text-danger"})
+                </div>
+            </div>
+        }
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new {@class = "control-label col-md-2"})
+            <div class="col-md-4">
+                @Html.TextAreaFor(model => model.Description, new {@class = "form-control"})
+                @Html.ValidationMessageFor(model => model.Description, "", new {@class = "text-danger"})
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Version, htmlAttributes: new {@class = "control-label col-md-2"})
+            <div class="col-md-4">
+                @Html.DisplayFor(model => model.Version, new {htmlAttributes = new {@class = "form-control"}})
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.UpdatedAt, htmlAttributes: new {@class = "control-label col-md-2"})
+            <div class="col-md-4">
+                @Html.DisplayFor(model => model.UpdatedAt, new {htmlAttributes = new {@class = "form-control"}})
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-4">
+                <input type="submit" value="Save" class="btn btn-success"/>
+            </div>
+        </div>
+    </div>
+}
+@section scripts
+{
+    @Html.InitPageMainModule(string.Empty)
+}

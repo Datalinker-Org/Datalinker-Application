@@ -1,0 +1,10 @@
+﻿@model DataLinker.Services.Emails.Models.SoftwareStatementUpdatedEmail
+Content-Type: text/plain; charset=utf-8
+
+Hello @Model.Name,
+
+    A new software statement has been generated to reflect your changed schema and licence terms, and your organisation's previous software statement has expired. (The software statement is used in the Dynamic Client Registration request to validate that you have accepted a Provider's licence terms.)
+    If your system automatically requests a software statement from DataLinker, then you do not have to take any further action. If your system has stored the previous statement, then you must update this with the new software statement which can be viewed and copied from @Model.UrlToApplicationDetails.
+
+@Model.DataLinkerHost
+Contact us: @Model.DataLinkerEmail

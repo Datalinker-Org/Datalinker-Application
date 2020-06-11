@@ -1,0 +1,10 @@
+﻿@model DataLinker.Services.Emails.Models.IndustryGoodApplicationEmail
+Content-Type: text/plain; charset=utf-8
+
+Hello @Model.Name,
+
+@Model.OrgName has registered an Industry Good consumer application. Please check that this is a valid industry good service, and activate if approved.
+If declined please make contact directly with the organisation to advise reasons for decline.
+
+@Model.DataLinkerHost
+Contact us: @Model.DataLinkerEmail

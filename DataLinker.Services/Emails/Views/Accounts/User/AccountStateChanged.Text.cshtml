@@ -1,0 +1,12 @@
+﻿@using DataLinker.Models.Enums
+@using DataLinker.Services.Helpers
+
+@model DataLinker.Services.Emails.Models.AccountStateChangedEmail
+Content-Type: text/plain; charset=utf-8
+
+Hello @Model.Name,
+
+Thank you for registering with DataLinker. Your account has been made @Model.State. @(Model.State == ActivationState.Active.GetDescription() ? "Log in to DataLinker now to add your services, and to select schema and licences for data transfer." : "Please contact us if you have any questions.")
+
+@Model.DataLinkerHost
+Contact us: @Model.DataLinkerEmail

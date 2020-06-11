@@ -1,0 +1,153 @@
+﻿@model DataLinker.Web.Models.Applications.NewApplicationDetails
+
+<div class="modal fade" id="create-application-modal" data-type="@Model.AppTypeDescription" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Create @Model.AppTypeDescription</h4>
+            </div>
+            <form action="@Url.Action("Create","Applications")" method="post" class="form-horizontal" role="form" id="new-service-form">
+                <div id="application-wizard">
+                    <div class="modal-body">
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(model => model.IsProvider)
+                        <div class="row padded-row navbar-inner">
+                            <ul class="nav nav-pills nav-stacked col-sm-3">
+                                <li class="active">
+                                    <a href="#application-wizard-tab1" data-toggle="tab">Description</a>
+                                </li>
+                                <li>
+                                    <a href="#application-wizard-tab2" data-toggle="tab">Origin FQND</a>
+                                </li>
+                                @if (Model.IsProvider)
+                                {
+                                <li>
+                                    <a href="#application-wizard-tab3" data-toggle="tab">Authentication</a>
+                                </li>
+                                }
+                                <li>
+                                    <a href="#application-wizard-tab4" data-toggle="tab">Summary</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content col-sm-9">
+                                <div class="tab-pane active" id="application-wizard-tab1">
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-3">Name</label>
+                                        <div class="col-sm-9">
+                                            @Html.EditorFor(model => model.Name, new {htmlAttributes = new {@class = "form-control", placeholder = $"Friendly {Model.AppTypeDescription} name..."}})
+                                            @Html.ValidationMessageFor(model => model.Name, "", new {@class = "text-danger"})
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Description, htmlAttributes: new {@class = "control-label col-sm-3"})
+                                        <div class="col-sm-9">
+                                            @Html.TextAreaFor(model => model.Description, new {@class = "form-control", placeholder = $"Describe the purpose of the {Model.AppTypeDescription} ..."})
+                                            @Html.ValidationMessageFor(model => model.Description, "", new {@class = "text-danger"})
+                                        </div>
+                                    </div>
+                                    @if (!Model.IsProvider)
+                                    {
+                                        <div class="form-group">
+                                            <div class="col-md-3"></div>
+                                            <div class="col-sm-9 checkbox">
+                                                <label>
+                                                    @Html.EditorFor(model => model.IsIntroducedAsIndustryGood) Register this application as industry good
+                                                </label>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                                <div class="tab-pane" id="application-wizard-tab2">
+                                    <p class="form-control-static">
+                                        Enter the Fully Qualified Domain Name for the host from which API queries
+                                        to DataLinker will originate. Host will be allocated its own access token to authenticate to the DataLinker
+                                        API.
+                                    </p>
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.OriginHosts, htmlAttributes: new {@class = "control-label col-sm-3"})
+                                        <div class="col-sm-9">
+                                            @Html.EditorFor(model => model.OriginHosts,new { htmlAttributes = new { @class = "form-control", placeholder = "e.g. https://domain.co.nz" } })
+                                            @Html.ValidationMessageFor(model => model.OriginHosts, "", new {@class = "text-danger"})
+                                            <h4>
+                                                <small>
+                                                    e.g. https://domain.co.nz
+                                                </small>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="application-wizard-tab3">
+                                    <p class="form-control-static">
+                                        Enter the OAuth endpoint details for your data provider service. If you have a
+                                        Well-known URL we can fetch the required information for you.
+                                    </p>
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.WellKnownUrl, htmlAttributes: new {@class = "control-label col-sm-4"})
+                                        <div class="col-sm-8">
+
+                                            <div class="input-group">
+                                                @Html.EditorFor(model => model.WellKnownUrl, new {htmlAttributes = new {@class = "form-control", @id = "app-well-known", @placeholder = "OpenID configuration Well-known URL..."}})
+                                                @Html.ValidationMessageFor(model => model.WellKnownUrl, "", new {@class = "text-danger"})
+                                                <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-default" data-url="@Url.Action("Index", "OpenID")" id="refresh-well-known"><span class="glyphicon glyphicon-refresh"></span></button>
+                                                    </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr/>
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.RegistrationEndpoint, htmlAttributes: new {@class = "control-label col-sm-4"})
+                                        <div class="col-sm-8">
+                                            @Html.EditorFor(model => model.RegistrationEndpoint, new {htmlAttributes = new {@class = "form-control", @placeholder = "Registration Endpoint URL..."}})
+                                            @Html.ValidationMessageFor(model => model.RegistrationEndpoint, "", new {@class = "text-danger"})
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.AuthorizationEndpoint, htmlAttributes: new {@class = "control-label col-sm-4"})
+                                        <div class="col-sm-8">
+                                            @Html.EditorFor(model => model.AuthorizationEndpoint, new {htmlAttributes = new {@class = "form-control", @id = "app-auth-endpoint", @placeholder = "Authorization Endpoint URL..."}})
+                                            @Html.ValidationMessageFor(model => model.AuthorizationEndpoint, "", new {@class = "text-danger"})
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.TokenEndpoint, htmlAttributes: new {@class = "control-label col-sm-4"})
+                                        <div class="col-sm-8">
+                                            @Html.EditorFor(model => model.TokenEndpoint, new {htmlAttributes = new {@class = "form-control", @id = "app-auth-token-endpoint", @placeholder = "Token Endpoint URL..."}})
+                                            @Html.ValidationMessageFor(model => model.TokenEndpoint, "", new {@class = "text-danger"})
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="application-wizard-tab4">
+                                    @if (Model.IsProvider)
+                                    {
+                                        <p>
+                                            Once you save this <span class="summary-app-name"></span> service, you will be able to add endpoints against each schema you choose to provide.
+                                        </p>
+                                    }
+                                    else
+                                    {
+                                        <p>
+                                            Once you save your <span class="summary-app-name"></span> application you will be able to select data schema and licence terms for the data you wish to receive.
+                                        </p>
+                                        <p class="consumer-industry-good hidden">
+                                            After you have finished setting up this application a System Administrator will need to verify the
+                                            application's Industry Good status before data feeds will be discovered the application.
+                                        </p>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" name="serviceType" value="@Model.AppType"/>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <input type="button" class="btn btn-default button-previous" name="previous" value="Back"/>
+                        <input type="button" class="btn btn-primary button-next" name="next" value="Next"/>
+                        <input type="submit" class="btn btn-success button-finish  hidden" name="save" value="Save"/>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

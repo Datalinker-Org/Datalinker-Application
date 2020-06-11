@@ -1,0 +1,44 @@
+﻿@using DataLinker.Web.Helpers
+@using DataLinker.Web.Models.Users
+@using PagedList.Mvc;
+
+@model DataLinker.Web.Models.Users.OrganisationUsers
+
+<div class="account-ui">
+    <h2>
+        Manage Organisation Members
+        <span class="pull-right">
+            <a href="@ViewBag.PreviousUrl" class="btn btn-default">
+                <span class="glyphicon glyphicon-chevron-left"></span> Back
+            </a>
+        </span>
+    </h2>
+    <p style="margin: 0 0 0">
+        Invite members to your organisation so they are able to contribute to Data Groups and access DataLinker Technical documentation and support.
+        Deactivate members to remove them from your organisation. Only DataLinker Admin can reactivate users.
+    </p>
+    <span class="pull-left btn-group">
+        <a href="#" data-toggle="modal" data-target="#newUser-dialog" data-backdrop="static" data-keyboard="false" class="btn btn-success">
+            <span class="glyphicon glyphicon-user"></span> Invite
+        </a>
+        <a href="@Url.Action("Index", new {includeInActive = !Model.IncludeInActive})" class="btn btn-default">
+            @(Model.IncludeInActive ? "Hide Inactive" : "Show Inactive")
+        </a>
+    </span>
+    <br />
+    <br />
+    <div class="users-table" data-refresh-url="@Url.Action("GetUsers", new {includeInActive = Model.IncludeInActive})">
+        @Html.Partial("_UsersTable", Model)
+    </div>
+    @if (Model.Users.PageCount > 1)
+    {
+        @Html.PagedListPager(Model.Users, page => Url.Action("Index",
+                      new { page }))
+    }
+    @Html.Partial("_HelpDetails")
+</div>
+@Html.Partial("_AddNewMember", new UserModel())
+@section scripts
+{
+    @Html.InitPageMainModule("accounts")
+}

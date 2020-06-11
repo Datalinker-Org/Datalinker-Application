@@ -1,0 +1,11 @@
+﻿@model DataLinker.Services.Emails.Models.ConsumerProviderRegistrations.ConsumerRegistrationDeclineByProviderEmail
+Content-Type: text/plain; charset=utf-8
+
+Hello @Model.Name,
+
+@(string.Format(
+        @" Your request to access the provider service {1} for {0} data has been declined by {1} for the below reason - {2} Please contact {1} directly for more details.", Model.SchemaName, Model.ProviderOrganizationName, Model.DeclineReason)
+)
+
+@Model.DataLinkerHost
+Contact us: @Model.DataLinkerEmail

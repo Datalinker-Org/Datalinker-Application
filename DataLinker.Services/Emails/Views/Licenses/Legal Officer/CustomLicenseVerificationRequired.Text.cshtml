@@ -1,0 +1,10 @@
+﻿@model DataLinker.Services.Emails.Models.CustomLicenseVerificationRequiredEmail
+Content-Type: text/plain; charset=utf-8
+
+Hello @Model.Name,
+
+@(Model.IsProvider ? string.Format("< Text for Provider here > <a href=\"{0}\">link to confirmation screen</a>", Model.LinkToConfirmationScreen)
+                : string.Format("< Text for Consumer here > <a href=\"{0}\">link to confirmation screen</a>", Model.LinkToConfirmationScreen))
+
+@Model.DataLinkerHost
+Contact us: @Model.DataLinkerEmail

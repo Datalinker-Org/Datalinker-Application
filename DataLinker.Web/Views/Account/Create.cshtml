@@ -1,0 +1,131 @@
+﻿@using DataLinker.Web.Helpers
+@model DataLinker.Web.Models.Users.RegisterModel
+
+<div class="register">
+    <form action="@Url.Action("Create","Account")" method="post" class="form-horizontal" role="form" id="new-organization-form">
+        @Html.AntiForgeryToken()
+        <div class="form-group">
+            <div class="col-sm-3 control-label">
+                <h2>
+                    Sign Up to DataLinker
+                </h2>
+            </div>
+            <div class="col-sm-6" style="margin-top: 30px">
+                <h4>
+                    <small>
+                        Required fields are marked with an asterisk (<abbr title="required" style="color: red; font-size: large;">*</abbr>).
+                    </small>
+                </h4>
+            </div>
+        </div>
+        
+        <p>
+            We recommend that your System Administrator takes responsibility for signing up your organisation and managing the members of your organisation via our invitation process
+        </p>
+
+        <div class="form-group">
+            <div class="col-sm-3">
+                <h3>Your organisation's details:</h3>
+            </div>
+        </div>
+        <div class="form-group required">
+            @Html.LabelFor(model => model.OrganizationName, htmlAttributes: new { @class = "control-label col-sm-3" })
+            <div class="col-sm-6">
+                @Html.EditorFor(model => model.OrganizationName, new { htmlAttributes = new { @class = "form-control", placeholder = "Your organization's name" } })
+                @Html.ValidationMessageFor(model => model.OrganizationName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group required">
+            @Html.LabelFor(model => model.OrganizationPhone, htmlAttributes: new { @class = "control-label col-sm-3" })
+            <div class="col-sm-6">
+                @Html.EditorFor(model => model.OrganizationPhone, new { htmlAttributes = new { @class = "form-control", placeholder = "Phone number, please include the area code" } })
+                @Html.ValidationMessageFor(model => model.OrganizationPhone, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group required">
+            @Html.LabelFor(model => model.OrganizationAddress, htmlAttributes: new { @class = "control-label col-sm-3" })
+            <div class="col-sm-6">
+                @Html.TextAreaFor(model => model.OrganizationAddress, new { @class = "form-control", placeholder = "Your organization's address" })
+                @Html.ValidationMessageFor(model => model.OrganizationAddress, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group required">
+            @Html.LabelFor(model => model.AdministrativeContact, htmlAttributes: new { @class = "control-label col-sm-3" })
+            <div class="col-sm-6">
+                @Html.EditorFor(model => model.AdministrativeContact, new { htmlAttributes = new { @class = "form-control", placeholder = "First and last names" } })
+                @Html.ValidationMessageFor(model => model.AdministrativeContact, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group required">
+            @Html.LabelFor(model => model.AdministrativePhone, htmlAttributes: new { @class = "control-label col-sm-3" })
+            <div class="col-sm-6">
+                @Html.EditorFor(model => model.AdministrativePhone, new { htmlAttributes = new { @class = "form-control", placeholder = "Phone number, please include the area code" } })
+                @Html.ValidationMessageFor(model => model.AdministrativePhone, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-3">
+                <h3>Your Details:</h3>
+            </div>
+        </div>
+        <div class="form-group required">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-sm-3" })
+            <div class="col-sm-6">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Your first and last names" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group required">
+            @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-sm-3" })
+            <div class="col-sm-6">
+                @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control", placeholder = "Your phone, please include the area code" } })
+                @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group required">
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-sm-3" })
+            <div class="col-sm-6">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Your email address" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        
+        <div class="form-group required">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-6">
+                <div class="checkbox">
+                    <label class="control-label">@Html.EditorFor(model => model.IsHaveReadTerms)I, <span class="terms-user-name"></span> have read the DataLinker <a target="_blank" href="~/Data Linker Terms of Use.pdf">Terms of Use</a></label>
+                    <div>@Html.ValidationMessageFor(model => model.IsHaveReadTerms, "", new {@class = "text-danger"})</div>
+                </div>
+                <div class="checkbox">
+                    <label class="control-label">@Html.EditorFor(model => model.IsAuthorised)I am authorised to accept the Terms of Use on behalf of </label><span class="terms-org-name"></span>
+                    <div>@Html.ValidationMessageFor(model => model.IsAuthorised, "", new {@class = "text-danger"})</div>
+                </div>
+                <div class="checkbox">
+                    <label class="control-label">@Html.EditorFor(model => model.IsAgreeWithTerms)I accept the Datalinker Terms of Use of Use on behalf of </label><span class="terms-org-name"></span>
+                    <div>@Html.ValidationMessageFor(model => model.IsAgreeWithTerms, "", new {@class = "text-danger"})</div>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div class="form-group">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-6">
+                <input type="submit" class="btn btn-success" value="Submit" />
+                <h4>
+                    <small>
+                        When you register you will be sent an email to verify your email address and to set a password.
+                        Please ensure that you register a Legal Officer for your organisation, who will be responsible
+                        for accepting licence terms for data sharing. DataLinker will then verify your registration and
+                        will notify you when your account is made active.
+                    </small>
+                </h4>
+            </div>
+        </div>
+    </form>
+</div>
+@section scripts
+{
+    @Html.InitPageMainModule("../views/register")
+}

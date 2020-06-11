@@ -1,0 +1,9 @@
+﻿@model DataLinker.Services.Emails.Models.NewConsumerRegistrationEmail
+Content-Type: text/plain; charset=utf-8
+
+Hello @Model.Name,
+
+New Consumer registration for aggregate schema. To provide access to your data for this consumer please confirm this request here: @Model.UrlToConsumerRequests
+
+@Model.DataLinkerHost
+Contact us: @Model.DataLinkerEmail

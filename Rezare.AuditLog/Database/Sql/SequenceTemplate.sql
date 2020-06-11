@@ -1,0 +1,7 @@
+﻿IF NOT EXISTS (SELECT 1 FROM sys.sequences WHERE name = N'{0}')
+BEGIN
+	CREATE SEQUENCE [dbo].[{0}]
+		AS bigint
+		START WITH 1
+		INCREMENT BY 1;
+END

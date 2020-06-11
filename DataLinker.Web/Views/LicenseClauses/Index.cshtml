@@ -1,0 +1,131 @@
+﻿@using DataLinker.Web.Helpers
+@model DataLinker.Models.SectionsAndClausesModel
+
+@{
+    ViewBag.Title = "Index";
+}
+<div id="LicenseClausesUI">
+    @{
+        if (Model.GlobalLicense == null)
+        {
+            <h3>Sorry, we do not have published license template now.</h3>
+        }
+        else
+        {
+            <h2>
+                License Template
+                <span class="pull-right">
+                    <a href="@ViewBag.PreviousUrl" class="btn btn-default">
+                        <span class="glyphicon glyphicon-chevron-left"></span> Back
+                    </a>
+                </span>
+            </h2>
+
+            <table class="table">
+                <tr>
+                    <th>@Html.DisplayNameFor(model => Model.GlobalLicense.Name)</th>
+                    <th>Created At</th>
+                    <th>
+                        <div class="pull-right">
+                            <a href="@Url.Action("Create", "LicenseTemplates")" class="btn btn-success">
+                                <span class="glyphicon glyphicon-plus"></span> Add
+                            </a>
+                        </div>
+                    </th>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayFor(model => Model.GlobalLicense.Name) @Html.StatusLabelTemplate(Model.GlobalLicense.Status)</td>
+                    <td>@Model.GlobalLicense.CreatedAt.ToDisplayDate()</td>
+                    <td>
+                        <span class="btn-group pull-right">
+                        <a href="@Url.Action("Details", "LicenseTemplates", new {id = Model.GlobalLicense.ID})" class="btn btn-default btn-sm">
+                            <span class="glyphicon "></span> View
+                        </a>
+                        <a href="@Url.Action("Edit", "LicenseTemplates", new {id = Model.GlobalLicense.ID})" class="btn btn-default btn-sm">
+                            <span class="glyphicon glyphicon-pencil"></span> Edit
+                        </a>
+                        <a href="@Url.Action("Download", "LicenseTemplates", new {fileId = Model.GlobalLicense.ID})" class="btn btn-default btn-sm">
+                            <span class="glyphicon glyphicon-download-alt"></span> Download
+                        </a>
+                        </span>
+                    </td>
+                </tr>
+            </table>
+            <div class="jumbotron">
+                <p style="margin: 0 0 0">
+                    Manage clause templates for license template on this page. Change status for them.
+                </p>
+            </div>
+            if (Model.GlobalLicense.IsActive)
+            {
+                <h2>License Clauses</h2>
+                <div class="panel-group" id="accordion">
+                    @foreach (var item in Model.Sections)
+                    {
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#@Html.DisplayFor(model => item.ID)">Section: @Html.DisplayFor(model => item.Title)</a>
+                                </h4>
+                            </div>
+                            <div id="@Html.DisplayFor(model => item.ID)" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <table class="table">
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Version</th>
+                                            <th>Status</th>
+                                            <th>Updated at</th>
+                                            <th>
+                                                <div class="btn-group pull-right">
+                                                    <button type="button" class="btn btn-success dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <span class="glyphicon glyphicon-plus"></span> Add <span class="caret"></span>
+                                                    </button>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a href="#" class="upload-new-clauses" data-section-id="@item.ID" data-section-name="@item.Title" data-url="@Url.Action("Upload", new {sectionId = item.ID})">Upload</a></li>
+                                                        <li><a href="@Url.Action("Create", new {sectionId = item.ID})">Create</a></li>
+                                                    </ul>
+                                                </div>
+                                            </th>
+                                        </tr>
+                                        @foreach (var clause in item.ClauseTemplates)
+                                        {
+                                            <tr>
+                                                <td>@Html.DisplayFor(model => clause.ShortText)</td>
+                                                <td>@Html.DisplayFor(model => clause.Version)</td>
+                                                <td>@Html.StatusLabelTemplate(clause.Status)</td>
+                                                <td>@Html.DisplayFor(model => clause.UpdatedAt)</td>
+                                                <td>
+                                                    <span class="btn-group pull-right">
+                                            <a href="@Url.Action("Edit", new {id = clause.ID})" class="btn btn-default btn-sm @(clause.IsActive || clause.IsRetracted?"disabled":"")">
+                                                <span class="glyphicon glyphicon-pencil"></span> Edit
+                                            </a>
+                                            <a href="#" class="retract btn btn-default btn-sm @(clause.IsRetracted?"disabled":"")" data-url="@Url.Action("Retract", new {id = clause.ID})">
+                                                <span class="glyphicon glyphicon-trash"></span> Retract
+                                            </a>
+                                            <a href="#" class="publish btn btn-default btn-sm @(clause.IsActive || clause.IsRetracted?"disabled":"")" data-url="@Url.Action("Publish", new {id = clause.ID})">
+                                                <span class="glyphicon glyphicon-upload" title="Publish clause template"></span> Publish
+                                            </a>
+                                        </span>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <h4>To start work with sections publish global license first.</h4>
+            }
+        }
+    }
+</div>
+@Html.Partial("_Upload", Model)
+@section scripts
+{
+    @Html.InitPageMainModule("licenseClauses")
+}

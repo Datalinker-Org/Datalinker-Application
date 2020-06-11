@@ -1,0 +1,9 @@
+﻿@model DataLinker.Services.Emails.Models.NewUserAndOrganizationEmail
+Content-Type: text/plain; charset=utf-8
+
+Hello @Model.Name,
+
+@Model.UserName from @Model.OrgName has registered as legal officer for new DataLinker organization. Please work through the authentication process to approve or decline this registration. If approved, please activate the organisation. If declined please make contact directly with the organisation to advise reasons for decline.
+
+@Model.DataLinkerHost
+Contact us: @Model.DataLinkerEmail

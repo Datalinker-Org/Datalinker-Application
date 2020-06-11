@@ -1,0 +1,9 @@
+﻿@model DataLinker.Services.Emails.Models.ConsumerProviderRegistrations.ProviderLegalApprovalEmail
+Content-Type: text/plain; charset=utf-8
+
+Hello @Model.Name,
+
+@(string.Format("{0} has provisionally requested access for {1} from {2}. {0} has viewed the attached data agreement published by you for providing {1} data and requested access to it. You are the registered authorised signatory for {2}. Please use this link {3} to approve or decline {0}'s request to access your data. NOTE this link may only be used once, so please review the terms first before accessing the link. The link will expire at {4}. Approval of this request will notify the consumer about your approval and a License Agreement will be executed automatically between your organization and the consumer organization to share {1} data. DataLinker accepts no liability arising from your use of or reliance on a Licence Agreement. Please visit the DataLinker website for more information, or contact us if you have any questions. Attached Licence Document - This document records the terms that your organization {2} specifies as a data provider using the DataLinker service. It does not yet constitute a Licence Agreement with another party.", Model.ConsumerOrganizationName, Model.SchemaName, Model.ProviderOrganizationName, Model.LinkToConfirmationScreen, DateTime.Now.AddDays(7)))
+
+@Model.DataLinkerHost
+Contact us: @Model.DataLinkerEmail

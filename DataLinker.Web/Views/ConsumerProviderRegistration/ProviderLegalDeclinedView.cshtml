@@ -1,0 +1,17 @@
+﻿@using DataLinker.Web.Helpers
+@model DataLinker.Models.ConsumerProviderRegistration.ConsumerProviderRegistrationDetail
+<div style="margin-top:20px;">
+    <div style="font-size: 30px; font-weight:500;">@Model.ProviderApplicationName</div>
+    <div style="font-size: 20px; font-weight:500;">Request to access @Model.SchemaName</div>
+    <div style="text-align: center;">
+        You have declined the request.
+        <br />
+        <br />
+        <br />
+        <a href="@ViewBag.PreviousUrl"><u><b>Go back to @Model.ProviderApplicationName</b></u></a>
+    </div>
+</div>
+@section scripts
+{
+    @Html.InitPageMainModule(string.Empty)
+}

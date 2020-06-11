@@ -1,0 +1,85 @@
+﻿@using DataLinker.Web.Helpers
+@using PagedList.Mvc
+@model PagedList.IPagedList<DataLinker.Models.SchemaModel>
+
+<div id="SchemaUI">
+    <h2>
+        Schemas
+        <span class="pull-right">
+            <a href="@ViewBag.PreviousUrl" class="btn btn-default">
+                <span class="glyphicon glyphicon-chevron-left"></span> Back
+            </a>
+        </span>
+    </h2>
+    <div class="jumbotron">
+        <p style="margin: 0 0 0">
+            Manage data schemas on this page.
+        </p>
+    </div>
+    <div class="pull-left">
+        <div class="btn-group">
+            <a href="@Url.Action("Create", "Schemas")" class="btn btn-success">
+                <span class="glyphicon glyphicon-plus"></span> Add
+            </a>
+            <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Reports <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="@Url.Action("GenerateReport")">Schema usage for @DateTime.Today.ToString("Y")</a></li>
+            </ul>
+        </div>
+    </div>
+    <br />
+    <br />
+    <table class="table">
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Published At
+            </th>
+            <th>
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.HiddenFor(modelItem => item.DataSchemaID, new { id = "DataSchemaID" })
+                    @Html.HiddenFor(modelItem => item.Version)
+                    @Html.DisplayFor(modelItem => item.Name) @Html.StatusLabelTemplate(item.Status)
+                </td>
+                <td>
+                    @(item.PublishedAt?.ToLocalTime())
+                </td>
+                <td>
+                    <span class="btn-group pull-right">
+                        <a href="@Url.Action("Download", new {fileId = item.SchemaFileId})" class="btn btn-default btn-sm @(item.SchemaFileId == 0 ? "disabled" : "")">
+                            <span class="glyphicon glyphicon-download-alt"></span> Download
+                        </a>
+                        <a href="#" data-url="@Url.Action("RetractSchema","Schemas",new { id = item.DataSchemaID })" data-id="@item.DataSchemaID" class="retract btn btn-default btn-sm @(item.Status == DataLinker.Models.Enums.TemplateStatus.Retracted ? "disabled" : "")">
+                            <span class="glyphicon glyphicon-trash"></span> Retract
+                        </a>
+                        <a href="@Url.Action("Edit", new {id = item.DataSchemaID})" class="btn btn-default btn-sm @(item.Status == DataLinker.Models.Enums.TemplateStatus.Retracted ? "disabled" : "")">
+                            <span class="glyphicon glyphicon-pencil"></span> Edit
+                        </a>
+                        <a href="#" data-url="@Url.Action("PublishSchema","Schemas", new { id=item.DataSchemaID})" data-id="@item.DataSchemaID" class="publish btn btn-default btn-sm @(item.Status == DataLinker.Models.Enums.TemplateStatus.Draft ? "" : "disabled")" title="Publish schema">
+                            <span class="glyphicon glyphicon-upload"></span> Publish
+                        </a>
+                    </span>
+                </td>
+            </tr>
+        }
+    </table>
+    @if (Model.PageCount > 1)
+    {
+        @Html.PagedListPager(Model, page => Url.Action("Index",
+                      new { page, includeRetracted = (bool)ViewBag.IncludeRetracted }))
+    }
+</div>
+@section scripts
+{
+    @Html.InitPageMainModule("schemas")
+}

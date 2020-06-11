@@ -1,0 +1,9 @@
+﻿@model DataLinker.Services.Emails.Models.NewProviderLicenseEmail
+Content-Type: text/plain; charset=utf-8
+
+Hello @Model.Name,
+
+@Model.OrgName has registered to provide @Model.SchemaName to DataLinker consumer applications. Use this link @Model.LinkToLicense to view the licence terms.
+
+@Model.DataLinkerHost
+Contact us: @Model.DataLinkerEmail

@@ -1,0 +1,62 @@
+﻿@model DataLinker.Models.ConsumerProviderRegistration.LegalApprovalModel
+<div class="modal fade" id="decline-reason-modal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="decline-reason-modal-title">Request decline</h4>
+            </div>
+                <div class="modal-body">
+                    <label>Please provide the reason for declining</label>
+                    <input type="hidden" id="hidConsumerProviderRegistrationId" value="@Model.ConsumerProviderRegistrationID" />
+                    <input type="hidden" id="hidIsProvider" value="@Model.IsProvider.ToString()" />
+                    <textarea rows="4" id="txtDeclineReason" style="width:100%; resize: none;"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnCancel" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" id="btnDecline" class="btn btn-success button-finish">Decline</button>
+                </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#btnDecline").click(function (event) {
+            var isProvider = $("#hidIsProvider").val();
+            var declineReason = $("#txtDeclineReason").val();
+            var consumerProviderRegistrationId = parseInt($("#hidConsumerProviderRegistrationId").val());
+            debugger;
+            //var url = "/consumer-provider-registration/" + consumerProviderRegistrationId + "/consumer-legal-approval/decline";
+            var url = '@Url.Action("ConsumerLegalDecline", "ConsumerProviderRegistration")';
+            //?consumerProviderRegistrationId = consumerProviderRegistrationId 
+            if (isProvider == "True") {
+                //url = "/ConsumerProviderRegistration/ProviderDecline"
+                //url = "/consumer-provider-registration/" + consumerProviderRegistrationId + "/provider-legal-approval/decline";
+                url = '@Url.Action("ProviderLegalDecline", "ConsumerProviderRegistration")';
+            }
+            
+            debugger; 
+            var postdata = { consumerProviderRegistrationId: consumerProviderRegistrationId, declineReason: declineReason };
+            $.post(url, postdata, function (data) {
+                debugger;
+                console.log("Declined by Provider Legal")
+                if (isProvider == "True") {
+                    //location.href = "/applications/" + data.model.ProviderApplicationID;
+                    //location.href = "/consumer-provider-registration/" + consumerProviderRegistrationId + "/provider-legal-approval/declined-view";
+                    location.href = '@Url.Action("ProviderLegalDeclinedView", "ConsumerProviderRegistration")';
+                } else {
+                    //location.href = "/applications/" + data.model.ConsumerApplicationID + "/schemas/" + data.model.SchemaID + "/consumer-provider-registration/providers";
+                    var consumerAppId = data.model.ConsumerApplicationID;
+                    var schemaId = data.model.SchemaID;
+                    var redirectUrl = '@Url.Action("Index", "ConsumerProviderRegistration", new { consumerAppId = "-1", schemaId = "-2" })';
+                    redirectUrl = redirectUrl.replace("-1", consumerAppId);
+                    redirectUrl = redirectUrl.replace("-2", schemaId);
+
+                    location.href = redirectUrl;
+                }
+                
+            })
+        })
+    })
+</script>
+

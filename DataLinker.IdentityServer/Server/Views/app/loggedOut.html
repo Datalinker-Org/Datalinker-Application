@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html ng-app="app" ng-controller="LayoutCtrl">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>{siteName}</title>
+    <link href="{contentPath}/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="{contentPath}/app/app.css" rel="stylesheet">
+    <link href="{contentPath}/css/{brand}.css" rel="stylesheet" />
+</head>
+<body lang="en">
+    <div class="headerWrapper">
+        <div class="navbar-header container">
+            <div class="navbar-brand"></div>
+
+            <ul class="nav navbar-nav" ng-show="model.currentUser" ng-cloak>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{model.currentUser}} <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{model.logoutUrl}}">Logout</a></li>
+                        <li class="divider" ng-show="model.loginWithDifferentAccountUrl"></li>
+                        <li><a href="{{model.loginWithDifferentAccountUrl}}" ng-show="model.loginWithDifferentAccountUrl">Login With Different Account</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class='container page-loggedOut' ng-cloak>
+        <div class="row">
+            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-6 align-center">
+                <div class="page-header">
+                    <h1>
+                        You are now logged out
+                    </h1>
+                </div>
+                <div class="panel panel-default" ng-show="model.redirectUrl">
+                    <div class="panel-body">
+                        <div ng-show="model.redirectUrl">
+                            <a class="btn btn-extraLong" ng-href="{{model.redirectUrl}}">Return to the <span ng-bind="model.clientName"></span> application</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script id='modelJson' type='application/json'>
+        {model}
+    </script>
+    <script src="{contentPath}/libs/jquery/jquery-1.11.0.min.js"></script>
+    <script src="{contentPath}/libs/bootstrap/js/bootstrap.min.js"></script>
+    <script src="{contentPath}/libs/angular/angular.1.2.13.min.js"></script>
+    <script src="{contentPath}/libs/encoder/encoder.min.js"></script>
+    <script src="{contentPath}/app/app.js"></script>
+</body>
+</html>
+

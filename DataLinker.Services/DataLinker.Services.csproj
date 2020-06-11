@@ -1,0 +1,337 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{94748278-9577-4E38-8C7C-4527A8E5012E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DataLinker.Services</RootNamespace>
+    <AssemblyName>DataLinker.Services</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Dapper, Version=1.12.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper-Async.1.03\lib\net45\Dapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Hangfire.Core, Version=1.5.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Hangfire.Core.1.5.7\lib\net45\Hangfire.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject, Version=3.3.3.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.3.3\lib\net45\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="NReco.PdfGenerator, Version=1.1.11.0, Culture=neutral, PublicKeyToken=231663d50a41b451, processorArchitecture=MSIL">
+      <HintPath>..\packages\NReco.PdfGenerator.1.1.11.0\lib\net20\NReco.PdfGenerator.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Postal, Version=1.0.0.0, Culture=neutral, PublicKeyToken=45719375b8b4d528, processorArchitecture=MSIL">
+      <HintPath>..\packages\Postal.Mvc5.1.2.0\lib\net45\Postal.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="RazorEngine, Version=3.4.1.0, Culture=neutral, PublicKeyToken=9ee697374c7e744a, processorArchitecture=MSIL">
+      <HintPath>..\packages\RazorEngine.3.4.1\lib\net45\RazorEngine.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Rezare.CommandBuilder, Version=0.2.3.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rezare.CommandBuilder.0.2.3.2\lib\net45\Rezare.CommandBuilder.dll</HintPath>
+    </Reference>
+    <Reference Include="Rezare.CommandBuilder.Services, Version=0.1.3.9, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rezare.CommandBuilder.Services.0.1.3.9\lib\net45\Rezare.CommandBuilder.Services.dll</HintPath>
+    </Reference>
+    <Reference Include="Rezare.CommandBuilder.SqlServer, Version=0.2.1.7, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rezare.CommandBuilder.SqlServer.0.2.1.7\lib\net45\Rezare.CommandBuilder.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.IdentityModel" />
+    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=4.0.20622.1351, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.4.0.2.206221351\lib\net45\System.IdentityModel.Tokens.Jwt.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="YamlDotNet, Version=4.3.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\YamlDotNet.4.3.1\lib\net45\YamlDotNet.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Admin\AdminService.cs" />
+    <Compile Include="Admin\IAdminService.cs" />
+    <Compile Include="Applications\ApplicationsService.cs" />
+    <Compile Include="Applications\IApplicationsService.cs" />
+    <Compile Include="Authorisation\AuthorisationService.cs" />
+    <Compile Include="Authorisation\IAuthorisationService.cs" />
+    <Compile Include="ConsumerProviderRegistrations\IConsumerProviderRegistrationService.cs" />
+    <Compile Include="ConsumerProviderRegistrations\ConsumerProviderRegistrationService.cs" />
+    <Compile Include="ConsumerRequests\ConsumerRequestService.cs" />
+    <Compile Include="ConsumerRequests\IConsumerRequestService.cs" />
+    <Compile Include="CustomLicenses\CustomLicenseService.cs" />
+    <Compile Include="CustomLicenses\ICustomLicenseService.cs" />
+    <Compile Include="Emails\INotificationService.cs" />
+    <Compile Include="Emails\Models\ApprovedConsumerRegistrationEmail.cs" />
+    <Compile Include="Emails\Models\ConsumerProviderRegistrations\ConsumerRegistrationDeclineByConsumerEmail.cs" />
+    <Compile Include="Emails\Models\ConsumerProviderRegistrations\ConsumerRegistrationDeclineByProviderEmail.cs" />
+    <Compile Include="Emails\Models\ConsumerProviderRegistrations\ConsumerRegistrationCompletionEmail.cs" />
+    <Compile Include="Emails\Models\ConsumerProviderRegistrations\ProviderLegalApproveEmail.cs" />
+    <Compile Include="Emails\Models\ConsumerProviderRegistrations\ProviderLegalApprovalEmail.cs" />
+    <Compile Include="Emails\Models\CustomLicenseVerificationRequiredEmail.cs" />
+    <Compile Include="Emails\Models\ConsumerProviderRegistrations\ConsumerLegalApprovalEmail.cs" />
+    <Compile Include="Emails\Models\RejectedConsumerRegistrationEmail.cs" />
+    <Compile Include="Emails\Models\NewConsumerRegistrationEmail.cs" />
+    <Compile Include="Emails\Models\SoftwareStatementUpdatedEmail.cs" />
+    <Compile Include="Emails\Models\LegalOfficerRegisteredEmail.cs" />
+    <Compile Include="Emails\Models\UserInvitationEmail.cs" />
+    <Compile Include="Emails\Roles\Admin\AdminNotificationService.cs" />
+    <Compile Include="Emails\Roles\Admin\IAdminNotificationService.cs" />
+    <Compile Include="Emails\Roles\LegalOfficer\ILegalOfficerNotificationService.cs" />
+    <Compile Include="Emails\Roles\LegalOfficer\LegalOfficerNotificationService.cs" />
+    <Compile Include="Emails\Roles\User\IUserNotificationService.cs" />
+    <Compile Include="Emails\Models\LegalOfficerApprovedLicenseEmail.cs" />
+    <Compile Include="Emails\Roles\User\UserNotificationService.cs" />
+    <Compile Include="Emails\EmailNotificationService.cs" />
+    <Compile Include="Emails\Services\IConsumerProviderRegistrationNotificationService.cs" />
+    <Compile Include="Emails\Services\ConsumerProviderRegistrationNotificationService.cs" />
+    <Compile Include="Exceptions\BaseApiException.cs" />
+    <Compile Include="Exceptions\BaseException.cs" />
+    <Compile Include="Emails\BaseEmailService.cs" />
+    <Compile Include="Emails\FileRazorViewEngine.cs" />
+    <Compile Include="Emails\Models\AccountStateChangedEmail.cs" />
+    <Compile Include="Emails\Models\AdminVerificationLicenseEmail.cs" />
+    <Compile Include="Emails\Models\ClauseTemplatePublishedEmail.cs" />
+    <Compile Include="Emails\Models\CommonEmailProperties.cs" />
+    <Compile Include="Emails\Models\EmailSettings.cs" />
+    <Compile Include="Emails\Models\IEmailSettings.cs" />
+    <Compile Include="Emails\Models\IndustryGoodApplicationEmail.cs" />
+    <Compile Include="Emails\Models\LegalOfficerVerificationLicenseEmail.cs" />
+    <Compile Include="Emails\Models\NewLegalOfficerEmail.cs" />
+    <Compile Include="Emails\Models\NewLicenseAgreementEmail.cs" />
+    <Compile Include="Emails\Models\NewProviderLicenseEmail.cs" />
+    <Compile Include="Emails\Models\NewUserAndOrganizationEmail.cs" />
+    <Compile Include="Emails\Models\OrganizationStateChangedEmail.cs" />
+    <Compile Include="Emails\Models\SchemaRetractedEmail.cs" />
+    <Compile Include="Emails\Models\UserVerificationEmail.cs" />
+    <Compile Include="Emails\Models\UserVerificationLicenseEmail.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Identities\IIdsApiService.cs" />
+    <Compile Include="LicenseComparer\ILicenseComparerService.cs" />
+    <Compile Include="LicenseComparer\LicenseComparerService.cs" />
+    <Compile Include="LicenseContent\ILicenseContentBuilder.cs" />
+    <Compile Include="LicenseContent\LicenseContentBuilder.cs" />
+    <Compile Include="FileProviders\ILicenseFileProvider.cs" />
+    <Compile Include="FileProviders\LicenseFileProvider.cs" />
+    <Compile Include="LicenseMatches\ILicenseMatchesService.cs" />
+    <Compile Include="LicenseMatches\LicenseMatchesService.cs" />
+    <Compile Include="LicenseTemplates\ClauseFileModel.cs" />
+    <Compile Include="LicenseTemplates\ILicenseClauseTemplateService.cs" />
+    <Compile Include="LicenseTemplates\ILicenseTemplatesService.cs" />
+    <Compile Include="LicenseVerification\ILicenseVerificationService.cs" />
+    <Compile Include="LicenseVerification\LicenseVerificationService.cs" />
+    <Compile Include="Mappings\ApplicationMappings.cs" />
+    <Compile Include="Mappings\ClauseModelMappings.cs" />
+    <Compile Include="Mappings\OrganisationMappings.cs" />
+    <Compile Include="Mappings\SchemaMappings.cs" />
+    <Compile Include="Mappings\SectionModelMappings.cs" />
+    <Compile Include="Configuration\ConfigurationService.cs" />
+    <Compile Include="Configuration\IConfigurationService.cs" />
+    <Compile Include="Helpers\EnumHelper.cs" />
+    <Compile Include="Helpers\TokensHelper.cs" />
+    <Compile Include="Mappings\TemplateMappings.cs" />
+    <Compile Include="Mappings\UserMappings.cs" />
+    <Compile Include="OrganizationLicenses\IOrganizationLicenseService.cs" />
+    <Compile Include="OrganizationLicenses\IOrganizationLicenseClauseService.cs" />
+    <Compile Include="OrganizationLicenses\LicenseCheckResult.cs" />
+    <Compile Include="OrganizationLicenses\OrganizationLicenseService.cs" />
+    <Compile Include="OrganizationLicenses\OrganizationLicenseClauseService.cs" />
+    <Compile Include="LicenseTemplates\LicenseClauseTemplateService.cs" />
+    <Compile Include="LicenseTemplates\LicenseTemplatesService.cs" />
+    <Compile Include="Organizations\IOrganisationsService.cs" />
+    <Compile Include="Organizations\OrganisationsService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Schemas\IDataSchemaService.cs" />
+    <Compile Include="Schemas\DataSchemaService.cs" />
+    <Compile Include="Security\ISecurityService.cs" />
+    <Compile Include="Security\SecurityService.cs" />
+    <Compile Include="ServicesSetup.cs" />
+    <Compile Include="SetupEmailServices.cs" />
+    <Compile Include="SoftwareStatements\IStatementService.cs" />
+    <Compile Include="SoftwareStatements\SoftwareStatementService.cs" />
+    <Compile Include="TokenInfo.cs" />
+    <Compile Include="Tokens\ITokenService.cs" />
+    <Compile Include="Tokens\TokenService.cs" />
+    <Compile Include="Urls\IUrlProvider.cs" />
+    <Compile Include="Urls\UrlProvider.cs" />
+    <Compile Include="Users\IUserService.cs" />
+    <Compile Include="Users\UserService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Emails\Views\Accounts\Admin\NewLegalOfficer.cshtml" />
+    <Content Include="Emails\Views\Accounts\Admin\NewLegalOfficer.Html.cshtml" />
+    <Content Include="Emails\Views\Accounts\Admin\NewLegalOfficer.Text.cshtml" />
+    <Content Include="Emails\Views\Accounts\Admin\NewUserAndOrganization.cshtml" />
+    <Content Include="Emails\Views\Accounts\Admin\NewUserAndOrganization.Html.cshtml" />
+    <Content Include="Emails\Views\Accounts\Admin\NewUserAndOrganization.Text.cshtml" />
+    <Content Include="Emails\Views\Accounts\User\AccountStateChanged.cshtml" />
+    <Content Include="Emails\Views\Accounts\User\AccountStateChanged.Html.cshtml" />
+    <Content Include="Emails\Views\Accounts\User\AccountStateChanged.Text.cshtml" />
+    <Content Include="Emails\Views\Applications\Admin\IndustryGoodApplication.cshtml" />
+    <Content Include="Emails\Views\Applications\Admin\IndustryGoodApplication.Html.cshtml" />
+    <Content Include="Emails\Views\Applications\Admin\IndustryGoodApplication.Text.cshtml" />
+    <Content Include="Emails\Views\Clauses\User\ClauseTemplatePublished.cshtml" />
+    <Content Include="Emails\Views\Clauses\User\ClauseTemplatePublished.Html.cshtml" />
+    <Content Include="Emails\Views\Clauses\User\ClauseTemplatePublished.Text.cshtml" />
+    <Content Include="Emails\Views\Licenses\Admin\AdminVerificationLicense.cshtml" />
+    <Content Include="Emails\Views\Licenses\Admin\AdminVerificationLicense.Html.cshtml" />
+    <Content Include="Emails\Views\Licenses\Admin\AdminVerificationLicense.Text.cshtml" />
+    <Content Include="Emails\Views\Licenses\Legal Officer\LegalOfficerVerificationLicense.cshtml" />
+    <Content Include="Emails\Views\Licenses\Legal Officer\LegalOfficerVerificationLicense.Html.cshtml" />
+    <Content Include="Emails\Views\Licenses\Legal Officer\LegalOfficerVerificationLicense.Text.cshtml" />
+    <Content Include="Emails\Views\Licenses\User\NewLicenseAgreement.cshtml" />
+    <Content Include="Emails\Views\Licenses\User\NewLicenseAgreement.Html.cshtml" />
+    <Content Include="Emails\Views\Licenses\User\NewLicenseAgreement.Text.cshtml" />
+    <Content Include="Emails\Views\Licenses\User\NewProviderLicense.cshtml" />
+    <Content Include="Emails\Views\Licenses\User\NewProviderLicense.Html.cshtml" />
+    <Content Include="Emails\Views\Licenses\User\NewProviderLicense.Text.cshtml" />
+    <Content Include="Emails\Views\Licenses\User\UserVerificationLicense.cshtml" />
+    <Content Include="Emails\Views\Licenses\User\UserVerificationLicense.Html.cshtml" />
+    <Content Include="Emails\Views\Licenses\User\UserVerificationLicense.Text.cshtml" />
+    <Content Include="Emails\Views\Organizations\OrganizationStateChanged.cshtml" />
+    <Content Include="Emails\Views\Organizations\OrganizationStateChanged.Html.cshtml" />
+    <Content Include="Emails\Views\Organizations\OrganizationStateChanged.Text.cshtml" />
+    <Content Include="Emails\Views\Schemas\User\SchemaRetracted.cshtml" />
+    <Content Include="Emails\Views\Schemas\User\SchemaRetracted.Html.cshtml" />
+    <Content Include="Emails\Views\Schemas\User\SchemaRetracted.Text.cshtml" />
+    <Content Include="Emails\Views\_ViewStart.cshtml" />
+    <Content Include="Emails\Views\UserVerification.cshtml" />
+    <Content Include="Emails\Views\UserVerification.Html.cshtml" />
+    <Content Include="Emails\Views\UserVerification.Text.cshtml" />
+    <Content Include="Emails\Views\Web.config" />
+    <None Include="app.config" />
+    <Content Include="Emails\Views\Licenses\Legal Officer\LegalOfficerApprovedLicense.cshtml" />
+    <Content Include="Emails\Views\Licenses\Legal Officer\LegalOfficerApprovedLicense.Html.cshtml" />
+    <Content Include="Emails\Views\Licenses\Legal Officer\LegalOfficerApprovedLicense.Text.cshtml" />
+    <Content Include="Emails\Views\SoftwareStatements\SoftwareStatementUpdated.cshtml" />
+    <Content Include="Emails\Views\SoftwareStatements\SoftwareStatementUpdated.Html.cshtml" />
+    <Content Include="Emails\Views\SoftwareStatements\SoftwareStatementUpdated.Text.cshtml" />
+    <Content Include="Emails\Views\ConsumerRequests\NewConsumerRegistration.Text.cshtml" />
+    <Content Include="Emails\Views\ConsumerRequests\NewConsumerRegistration.cshtml" />
+    <Content Include="Emails\Views\ConsumerRequests\NewConsumerRegistration.Html.cshtml" />
+    <Content Include="Emails\Views\ConsumerRequests\RejectedConsumerRegistration.cshtml" />
+    <Content Include="Emails\Views\ConsumerRequests\RejectedConsumerRegistration.Html.cshtml" />
+    <Content Include="Emails\Views\ConsumerRequests\RejectedConsumerRegistration.Text.cshtml" />
+    <Content Include="Emails\Views\ConsumerRequests\ApprovedConsumerRegistration.cshtml" />
+    <Content Include="Emails\Views\ConsumerRequests\ApprovedConsumerRegistration.Html.cshtml" />
+    <Content Include="Emails\Views\ConsumerRequests\ApprovedConsumerRegistration.Text.cshtml" />
+    <Content Include="Emails\Views\Accounts\User\LegalOfficerRegistered\LegalOfficerRegistered.Text.cshtml" />
+    <Content Include="Emails\Views\Accounts\User\LegalOfficerRegistered\LegalOfficerRegistered.cshtml" />
+    <Content Include="Emails\Views\Accounts\User\LegalOfficerRegistered\LegalOfficerRegistered.Html.cshtml" />
+    <Content Include="Emails\Views\Licenses\Legal Officer\CustomLicenseVerificationRequired.cshtml" />
+    <Content Include="Emails\Views\Licenses\Legal Officer\CustomLicenseVerificationRequired.Html.cshtml" />
+    <Content Include="Emails\Views\Licenses\Legal Officer\CustomLicenseVerificationRequired.Text.cshtml" />
+    <Content Include="Emails\Views\UserInvitation.cshtml" />
+    <Content Include="Emails\Views\UserInvitation.Html.cshtml" />
+    <Content Include="Emails\Views\UserInvitation.Text.cshtml" />
+    <Content Include="Emails\Views\ConsumerProviderRegistrations\ConsumerLegalApproval.cshtml" />
+    <Content Include="Emails\Views\ConsumerProviderRegistrations\ConsumerLegalApproval.Html.cshtml" />
+    <Content Include="Emails\Views\ConsumerProviderRegistrations\ConsumerLegalApproval.Text.cshtml" />
+    <Content Include="Emails\Views\ConsumerProviderRegistrations\ProviderLegalApproval.cshtml" />
+    <Content Include="Emails\Views\ConsumerProviderRegistrations\ProviderLegalApproval.Html.cshtml" />
+    <Content Include="Emails\Views\ConsumerProviderRegistrations\ProviderLegalApproval.Text.cshtml" />
+    <Content Include="Emails\Views\ConsumerProviderRegistrations\ProviderLegalApprove.cshtml" />
+    <Content Include="Emails\Views\ConsumerProviderRegistrations\ProviderLegalApprove.Html.cshtml" />
+    <Content Include="Emails\Views\ConsumerProviderRegistrations\ProviderLegalApprove.Text.cshtml" />
+    <Content Include="Emails\Views\ConsumerProviderRegistrations\ConsumerRegistrationCompletion.cshtml" />
+    <Content Include="Emails\Views\ConsumerProviderRegistrations\ConsumerRegistrationCompletion.Html.cshtml" />
+    <Content Include="Emails\Views\ConsumerProviderRegistrations\ConsumerRegistrationCompletion.Text.cshtml" />
+    <Content Include="Emails\Views\ConsumerProviderRegistrations\ConsumerRegistrationDeclineByProvider.cshtml" />
+    <Content Include="Emails\Views\ConsumerProviderRegistrations\ConsumerRegistrationDeclineByProvider.Html.cshtml" />
+    <Content Include="Emails\Views\ConsumerProviderRegistrations\ConsumerRegistrationDeclineByProvider.Text.cshtml" />
+    <Content Include="Emails\Views\ConsumerProviderRegistrations\ConsumerRegistrationDeclineByConsumer.cshtml" />
+    <Content Include="Emails\Views\ConsumerProviderRegistrations\ConsumerRegistrationDeclineByConsumer.Html.cshtml" />
+    <Content Include="Emails\Views\ConsumerProviderRegistrations\ConsumerRegistrationDeclineByConsumer.Text.cshtml" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DataLinker.Database\DataLinker.Database.csproj">
+      <Project>{e95b7d44-e8f1-49f4-bf82-521d741103a5}</Project>
+      <Name>DataLinker.Database</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataLinker.Models\DataLinker.Models.csproj">
+      <Project>{2534fb8c-ad6a-4291-a837-d5f8622d3e19}</Project>
+      <Name>DataLinker.Models</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,75 @@
+﻿@model DataLinker.Services.Emails.Models.UserVerificationEmail
+Content-Type: text/html; charset=utf-8
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>DataLinker Registration</title>
+    <link rel="stylesheet" type="text/css" href="@Model.UrlToStylesFile">
+</head>
+<body>
+<table border="0" cellpadding="0" cellspacing="0" width="600" align="center">
+    <tr>
+        <td>
+            <table border="0" cellpadding="0" cellspacing="0" align="center" width="100%">
+                <tr>
+                    <td style="padding: 30px 30px 0px 30px; vertical-align: top" align="center">
+                        <img src="@Model.UrlToImageInEmail" width="60" alt="dataLinker" />
+                        <br/>
+                        <br/>
+                        <div style="font-size: 24px; color: #2C3E44; padding-bottom: 20px; font-weight: bold;">Welcome to DataLinker</div>
+                        <div style="font-size: 18px; color:#2c3e44; font-weight: bold;">Before we can continue we need to confirm your email address</div>
+                        <div style="font-size: 14px;">
+                            <a href="@Model.VerificationLink" target="_blank" style="padding: 8px 12px;font-family: Helvetica, Arial, sans-serif;font-size: 14px; Background-color: #f06543; color: #E8E8E8;text-decoration: none;font-weight:bold;display: inline-block;">Confirm Email</a>
+                            <br>
+                            <br>
+                            Please confirm your registration of @Model.OrgName by clicking on the button above or <br>by clicking <a href="@Model.VerificationLink">this link</a>
+                            <br>
+                            <br>
+                            <p>
+                                This link will expire at @DateTime.Now.AddDays(7).ToString("dd/MM/yyyy hh:mm tt")
+                            </p>
+                            <p>
+                                @Model.Name has registered with DataLinker using this email address.
+                                If you did not register with DataLinker, just ignore this email.
+                            </p>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 20px 30px 30px 30px; vertical-align: top" align="center">
+                        <div style="font-size: 14px; color: #2C3E44">If you require help, contact us by email:<br><a href="mailto:@(Model.DataLinkerEmail)" class="email" style="color: #5f5f5f;">@Model.DataLinkerEmail</a>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td bgcolor="#1C6C8A" style="padding: 15px 0 15px 30px; color: #E8E8E8;" height="50">
+                        <table border="0" cellpadding="0" cellspacing="0" align="center" width="49%">
+                            <tr>
+                                <td>
+                                    <div class="footer">
+                                        <a href="@Model.DataLinkerHost" class="email">www.datalinker.org</a>
+                                        <br>
+                                        <span style="color: white">Email us to</span> <a href="mailto:@(Model.DataLinkerEmail)" class="email">@Model.DataLinkerEmail</a>
+                                        <br>
+                                        <br>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        <table border="0" cellpadding="0" cellspacing="0" align="center" width="49%">
+                            <tr>
+                                <td>
+                                    <div class="footer"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

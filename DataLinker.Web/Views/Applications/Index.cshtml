@@ -1,0 +1,116 @@
+﻿@model PagedList.IPagedList<DataLinker.Models.ApplicationDetails>
+@using DataLinker.Web.Helpers
+@using DataLinker.Models
+@using PagedList.Mvc
+
+@{
+    ViewBag.Title = "Services and Applications";
+}
+@{ var isAdmin = (ViewData["LoggedInUser"] as LoggedInUserDetails).IsSysAdmin;}
+<div id="applications-ui">
+    <h2>Services and Applications
+        <span class="pull-right">
+                <a href="@ViewBag.PreviousUrl" class="btn btn-default">
+                    <span class="glyphicon glyphicon-chevron-left"></span> Back
+                </a>
+            </span>
+    </h2>
+    <div class="jumbotron">
+        <p style="margin: 0 0 0">
+            Manage applications on this page. Activate/Deactivate them. Confirm/Reject requests of industry good applications.
+        </p>
+    </div>
+    @if (!Model.Any())
+    {
+        <p>No applications/services to display</p>
+    }
+    else
+    {
+        <table class="table">
+            <tr>
+                <th>
+                    Name
+                </th>
+                @if (isAdmin)
+                {
+                    <th>
+                        Organization Name
+                    </th>
+                }
+                <th>
+                </th>
+                @if (isAdmin)
+                {
+                    <th>
+                        Is Active
+                    </th>
+                }
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                var appType = item.IsProvider ? "Service" : "Application";
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                        @Html.ServiceTypeLabel(item.IsProvider)
+                    </td>
+
+                    @if (isAdmin)
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OrganizationName)
+                        </td>
+                    }
+                    <td>
+                        @if (item.IsIndustryGood)
+                        {
+                            @Html.ServiceClassificationLabel(item.IsIndustryGood)
+                        }
+                        else
+                        {
+                            if (isAdmin && item.IsIntroducedAsIndustryGood)
+                            {
+                                <div>
+                                    <span class="glyphicon glyphicon-question-sign" title="This application marked as Industry Good. Please, check this information and confirm or reject."></span>Awaiting check of Industry Good Status:
+                                </div>
+                                <button type="button" class="btn btn-danger btn-xs" id="decline-industry-good" data-id="@item.ID" data-url="@Url.Action("DeclineIndustryGood", new {id = item.ID})">
+                                    <span class="glyphicon glyphicon-remove"></span> Reject
+                                </button>
+                                <div class="btn-group btn-group-xs">
+                                    <button type="button" class="btn btn-success btn-xs" id="approve-industry-good" data-id="@item.ID" data-url="@Url.Action("ApproveIndustryGood", new {id = item.ID})">
+                                        <span class="glyphicon glyphicon-ok"></span> Confirm
+                                    </button>
+                                </div>
+                            }
+                        }
+                    </td>
+                    @if (isAdmin)
+                    {
+                        <td>
+                            @Html.CheckBoxFor(modelItem => item.IsActive, new {@class = "service-status", data_applicationid = item.ID, data_url = Url.Action("ChangeStatus", "Applications")})
+                        </td>
+                    }
+                    <td>
+                        <span class="btn-group pull-right">
+                        <a href="@Url.Action("Details", new {id = item.ID})" class="btn btn-default btn-sm">
+                            <span class="glyphicon" aria-hidden="true"></span> View
+                        </a>
+                    </span>
+                    </td>
+                </tr>
+            }
+
+        </table>
+    }
+    @if (Model.PageCount > 1)
+    {
+        @Html.PagedListPager(Model, page => Url.Action("Index",
+            new {page}))
+    }
+</div>
+@section scripts
+{
+    @Html.InitPageMainModule("applications")
+}

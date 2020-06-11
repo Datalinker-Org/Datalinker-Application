@@ -1,0 +1,9 @@
+﻿@model DataLinker.Services.Emails.Models.ApprovedConsumerRegistrationEmail
+Content-Type: text/plain; charset=utf-8
+
+Hello @Model.Name,
+
+@Model.ProviderName has approved your registration request for the aggregated schema (@Model.SchemaName) service.
+
+@Model.DataLinkerHost
+Contact us: @Model.DataLinkerEmail

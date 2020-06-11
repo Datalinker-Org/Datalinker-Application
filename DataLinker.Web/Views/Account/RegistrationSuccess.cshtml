@@ -1,0 +1,6 @@
+﻿@model DataLinker.Web.Models.ErrorModel
+<h3>We have sent an email with confirmation link to <a href="@Model.Message">@Model.Message</a></h3>
+<h3>Please follow that link to finish your registration</h3>
+<h4>
+    <small>NOTE: Confirmation link will expire at @DateTime.Now.AddDays(7)</small>
+</h4>

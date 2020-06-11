@@ -1,0 +1,59 @@
+﻿@model DataLinker.Models.ApplicationAuthenticationDetails
+
+<div class="modal fade" id="application-auth-modal" tabindex="-1" role="dialog" aria-labelledby="application-auth-modal" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Edit Authentication endpoints</h4>
+            </div>
+            <div class="modal-body">
+                <form action="@Url.Action("EditApplicationAuthentication")" method="post" id="application-auth-form">
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.WellKnownUrl, htmlAttributes: new { @class = "control-label col-sm-4" })
+                            <div class="col-sm-8">
+
+                                <div class="input-group">
+                                    @Html.EditorFor(model => model.WellKnownUrl, new { htmlAttributes = new { @class = "form-control", @id = "app-well-known", @placeholder = "OpenID configuration .well-known URL..." } })
+                                    @Html.ValidationMessageFor(model => model.WellKnownUrl, "", new { @class = "text-danger" })
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default" data-url="@Url.Action("Index", "OpenID")" id="refresh-well-known"><span class="glyphicon glyphicon-refresh"></span></button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.RegistrationEndpoint, htmlAttributes: new { @class = "control-label col-sm-4" })
+                            <div class="col-sm-8">
+                                @Html.EditorFor(model => model.RegistrationEndpoint, new { htmlAttributes = new { @class = "form-control", @placeholder = "Registration Endpoint URL..." } })
+                                @Html.ValidationMessageFor(model => model.RegistrationEndpoint, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.AuthorizationEndpoint, htmlAttributes: new { @class = "control-label col-sm-4" })
+                            <div class="col-sm-8">
+                                @Html.EditorFor(model => model.AuthorizationEndpoint, new { htmlAttributes = new { @class = "form-control", @id = "app-auth-endpoint", @placeholder = "Authorization Endpoint URL..." } })
+                                @Html.ValidationMessageFor(model => model.AuthorizationEndpoint, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.TokenEndpoint, htmlAttributes: new { @class = "control-label col-sm-4" })
+                            <div class="col-sm-8">
+                                @Html.EditorFor(model => model.TokenEndpoint, new { htmlAttributes = new { @class = "form-control", @id = "app-auth-token-endpoint", @placeholder = "Token Endpoint URL..." } })
+                                @Html.ValidationMessageFor(model => model.TokenEndpoint, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary save-application-auth-btn">Save</button>
+            </div>
+        </div>
+    </div>
+</div>

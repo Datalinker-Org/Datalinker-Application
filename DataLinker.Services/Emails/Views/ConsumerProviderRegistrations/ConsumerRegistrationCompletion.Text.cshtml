@@ -1,0 +1,16 @@
+﻿@model DataLinker.Services.Emails.Models.ConsumerProviderRegistrations.ConsumerRegistrationCompletionEmail
+Content-Type: text/plain; charset=utf-8
+
+Hello @Model.Name,
+
+@(string.Format(
+        @"Congratulations! Your request to access the provider service {2} for {1} data has been approved by {2}. A License Agreement has now been executed between {2} and {0} to share {1} data. 
+            Without limiting DataLinker’s Terms of Use, it is your responsibility to determine that this License Agreement meets the needs of your business and is suitable for the purpose for which it is 
+            intended to be used. You should consider taking professional advice to ensure this is the case. DataLinker accepts no liability arising from your use of or reliance on a License Agreement. 
+            Please visit the DataLinker website for more information or contact us if you have any questions. Attached Licence Document -This document records the terms that 
+            @Model.ProviderOrganizationName specifies as a data provider using the DataLinker service and which {0} has accepted to share {1} data.",
+        Model.ConsumerOrganizationName, Model.SchemaName, Model.ProviderOrganizationName)
+)
+
+@Model.DataLinkerHost
+Contact us: @Model.DataLinkerEmail

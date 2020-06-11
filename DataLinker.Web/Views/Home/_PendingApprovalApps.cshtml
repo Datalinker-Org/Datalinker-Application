@@ -1,0 +1,31 @@
+﻿@using DataLinker.Web.Helpers
+@model IEnumerable<DataLinker.Models.ApplicationModel>
+
+@if (!Model.Any())
+{
+    <div class="panel-body">No applications and services requiring legal approval</div>
+}
+else
+{
+    <table class="table">
+        @foreach (var item in Model)
+        {
+            var appType = item.IsProvider ? "Service" : "Application";
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.ServiceTypeLabel(item.IsProvider)
+                </td>
+                <td>
+                    <span class="btn-group pull-right">
+                        <a href="@Url.Action("Details", "Applications", new {id = item.ID})" class="btn btn-default btn-sm">
+                            <span aria-hidden="true"></span> View
+                        </a>
+                </span>
+                </td>
+            </tr>
+        }
+    </table>
+}

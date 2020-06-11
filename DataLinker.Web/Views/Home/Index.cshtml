@@ -1,0 +1,67 @@
+﻿@using DataLinker.Web.Helpers
+@model DataLinker.Models.DashboardModel
+
+<h2>
+    @Model.OrganizationName <label style="font-size: 40%;" class="label @(Model.IsActive ? "label-success":"label-default")">@(Model.IsActive ? "active" : "inactive")</label>
+</h2>
+@if (!Model.IsActive) {
+    @Html.Partial("_InformationMessage")
+}
+<div class="row">
+    <div id="applications-ui">
+        <div class="col-sm-8">
+            <div class="panel panel-default @(Model.IsActive ? "" : "disabled")">
+                <div class="panel-heading">
+                    Applications and Services Requiring Legal Approval
+                </div>
+                @Html.Partial("_PendingApprovalApps", Model.PendingLegalApproval)
+            </div>
+            @*<div class="panel panel-default @(Model.IsActive ? "" : "disabled")">
+                <div class="panel-heading">
+                    Consumer
+                </div>
+                @Html.Partial("_RegistrationConsumerLegalPendingApproval", Model.ConsumerLegelPendingApproval)
+            </div>*@
+            <div class="panel panel-default @(Model.IsActive ? "" : "disabled")">
+                <div class="panel-heading">
+                    Applications and Services
+                    <div class="btn-group pull-right">
+                        <button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" data-url="@Url.Action("Create", "Applications", new {appType = "service"})" class="create-new-application" data-app-type="service"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Provider Service</a></li>
+                            <li><a href="#" data-url="@Url.Action("Create", "Applications", new {appType = "application"})" class="create-new-application" data-app-type="application"><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> Consumer Application</a></li>
+                        </ul>
+                    </div>
+                </div>
+                @Html.Partial("_OtherApps", Model.OtherApplications)
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Active members
+                    <span class="pull-right">
+                            <a href="@Url.Action("Index", "Account")" class="btn btn-default btn-sm">
+                                <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Manage
+                            </a>
+                        </span>
+                </div>
+
+                @Html.Partial("_ActiveOrgMembers", Model.Members)
+            </div>
+        </div>
+        @Html.Partial("~/Views/Account/_AddNewMember.cshtml", new DataLinker.Web.Models.Users.UserModel { OrganizationId = Model.OrganizationID})
+        <div class="create-new-application-modal-location"></div>
+        <div class="edit-application-details-modal-location"></div>
+        <div class="edit-profile-modal-location"></div>
+    </div>
+</div>
+<p>
+    <b>Need help?</b> Check out our <a href="~/Datalinker User Guide v1.6.pdf">User guide</a>
+</p>
+@section scripts{
+    @Html.InitPageMainModule("../views/dashboard")
+    
+}

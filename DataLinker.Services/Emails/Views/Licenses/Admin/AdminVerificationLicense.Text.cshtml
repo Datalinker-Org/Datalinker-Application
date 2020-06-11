@@ -1,0 +1,9 @@
+﻿@model DataLinker.Services.Emails.Models.AdminVerificationLicenseEmail
+Content-Type: text/plain; charset=utf-8
+
+Hello @Model.Name,
+
+License status was changed to @Model.DecisionMade.ToString() by Legal Officer. Click here to see details: @Model.DetailsLink
+
+@Model.DataLinkerHost
+Contact us: @Model.DataLinkerEmail

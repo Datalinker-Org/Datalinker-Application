@@ -1,0 +1,17 @@
+﻿@model DataLinker.Models.ApplicationAuthenticationDetails
+@using DataLinker.Web.Helpers
+
+<table class="table">
+    <tr>
+        <td><b>@Html.DisplayNameFor(model => model.RegistrationEndpoint)</b></td>
+        <td>@Html.RenderLongUrl(Model.RegistrationEndpoint)</td>
+    </tr>
+    <tr>
+        <td><b>@Html.DisplayNameFor(model => model.AuthorizationEndpoint)</b></td>
+        <td>@Html.RenderLongUrl(Model.AuthorizationEndpoint)</td>
+    </tr>
+    <tr>
+        <td><b>@Html.DisplayNameFor(model => model.TokenEndpoint)</b></td>
+        <td>@Html.RenderLongUrl(Model.TokenEndpoint)</td>
+    </tr>
+</table>

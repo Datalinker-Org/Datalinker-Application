@@ -1,0 +1,20 @@
+﻿@using DataLinker.Web.Helpers
+@model DataLinker.Models.ConsumerProviderRegistration.ConsumerProviderRegistrationDetail
+<div style="margin-top:20px;">
+    <div style="font-size: 30px; font-weight:500;">@Model.ProviderApplicationName</div>
+    <div style="font-size: 20px; font-weight:500;">Request to access @Model.SchemaName</div>
+    <div style="text-align: center;">
+        Thank you for approving the Data Agreement.
+        <br />
+        <br />
+        Your technical contact must provide the consumer organisation with access keys for your API. DataLinker does not do this on your behalf.
+        <br />
+        <br />
+        <br />
+        <a href="@ViewBag.PreviousUrl"><u><b>Go back to @Model.ProviderApplicationName</b></u></a>
+    </div>
+</div>
+@section scripts
+{
+    @Html.InitPageMainModule(string.Empty)
+}

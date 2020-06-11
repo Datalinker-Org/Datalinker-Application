@@ -1,0 +1,28 @@
+﻿@model IEnumerable<DataLinker.Models.ApplicationTokenDetails>
+
+@if (Model.Count() > 0) {
+<tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.OriginHost)
+            </td>
+            <td>
+                <span class="pull-right btn-group">
+                    <a href="#" class="btn btn-default btn-sm show-host-token" data-host-token-id="@item.ID" data-host-token="@item.Token" data-url="@Url.Action("GenerateNewToken",new {tokenId=item.ID})">
+                        <span class="glyphicon glyphicon-barcode"></span> API Key
+                    </a>
+                    <a href="#" class="btn btn-default btn-sm delete-host" data-host-token-id="@item.ID" data-url="@Url.Action("ExpireToken",new { tokenId=item.ID})">
+                        <span class="glyphicon glyphicon-trash"></span> Remove
+                    </a>
+                </span>
+            </td>
+        </tr>
+    }
+</tbody>
+
+}
+else {
+<tr><td>There are no hosts to display. Add new host above...</td></tr>
+}

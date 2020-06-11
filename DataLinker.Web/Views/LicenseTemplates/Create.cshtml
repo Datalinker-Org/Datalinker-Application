@@ -1,0 +1,17 @@
+﻿@model DataLinker.Models.LicenseTemplateDetails
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Add New License
+    <span class="pull-right">
+        <a href="@ViewBag.PreviousUrl" class="btn btn-default">
+            <span class="glyphicon glyphicon-chevron-left"></span> Back
+        </a>
+    </span>
+    </h2>
+
+@{
+    Html.RenderPartial("_EditForm", Model);
+}

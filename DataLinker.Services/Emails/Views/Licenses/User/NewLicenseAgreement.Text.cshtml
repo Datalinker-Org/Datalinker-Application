@@ -1,0 +1,9 @@
+﻿@model DataLinker.Services.Emails.Models.NewLicenseAgreementEmail
+Content-Type: text/plain; charset=utf-8
+
+Hello @Model.Name,
+
+New license agreement between @Model.OrgNameProvider and @Model.OrgNameConsumer for @Model.SchemaName. Download: @Model.LinkToLicense
+
+@Model.DataLinkerHost
+Contact us: @Model.DataLinkerEmail

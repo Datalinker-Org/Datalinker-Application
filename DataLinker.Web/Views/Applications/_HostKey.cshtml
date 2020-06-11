@@ -1,0 +1,22 @@
+﻿<div class="modal fade" id="host-details-modal" tabindex="-1" role="dialog" aria-labelledby="host-details" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="host-details-title">Key for <span class="displayed-host"></span></h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <p>
+                        This is the authentication token for API requests from <span class="displayed-host"></span> to DataLinker. You can generate a new token for this host which will expire the old token immediately.
+                    </p>
+                    <pre class="displayed-token"></pre>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary new-token-btn">Generate New</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,38 @@
+﻿@using DataLinker.Web.Helpers
+@model DataLinker.Models.LicenseTemplateDetails
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>@Html.DisplayFor(model => model.Name)
+    <span class="pull-right">
+        <a href="@ViewBag.PreviousUrl" class="btn btn-default">
+            <span class="glyphicon glyphicon-chevron-left"></span> Back
+        </a>
+    </span>
+    </h2>
+<div class="form-horizontal">
+    @Html.HiddenFor(model => model.LicenseId)
+
+    <h4>Version @Html.DisplayFor(model => model.Version): @Html.StatusLabelTemplate(Model.Status)</h4>
+    <div class="form-group">
+        <div class="col-md-4">
+            <div class="license-text">@Html.Raw(Model.LicenseText)</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-4">
+            @Html.TextAreaFor(model => model.Description, new {@class="form-control"})
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-4">
+            @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, new { @class = "btn btn-success" })
+        </div>
+    </div>
+</div>
+@section scripts
+{
+    @Html.InitPageMainModule(string.Empty)
+}

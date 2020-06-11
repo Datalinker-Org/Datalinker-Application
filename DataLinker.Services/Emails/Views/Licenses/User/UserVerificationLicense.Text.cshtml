@@ -1,0 +1,22 @@
+﻿@using DataLinker.Models.Enums
+@using DataLinker.Services.Helpers
+@model DataLinker.Services.Emails.Models.UserVerificationLicenseEmail
+Content-Type: text/plain; charset=utf-8
+
+Hello @Model.Name,
+
+@if (Model.DecisionMade == PublishStatus.ReadyToPublish)
+{
+    <span>
+        The Legal Officer for @Model.OrganizationName has approved the licence terms for @Model.SchemaName and it is now ready to be published.
+        @(Model.IsProvider ? "Publishing the schema will make it visible to DataLinker consumer applications, so that they may consider accessing this data and executing a Licence Agreement on these terms." : "Publishing the schema will enable your application to execute a Licence Agreement with Provider services that match these terms, and you must be prepared to meet the obligations agreed to here.")
+        To publish this schema, <a href="@Model.DetailsLink">click here</a>.
+    </span>
+}
+else
+{
+    <span>The Legal Officer for @Model.OrganizationName has declined the licence terms for @Model.SchemaName. Status for license was changed to @Model.DecisionMade.GetDescription()</span>
+}
+
+@Model.DataLinkerHost
+Contact us: @Model.DataLinkerEmail

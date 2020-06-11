@@ -1,0 +1,16 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DataLinker.Services.Emails.Models.ConsumerProviderRegistrations
+{
+    public class ConsumerRegistrationCompletionEmail : CommonEmailProperties
+    {
+        public string Name;
+        public string ConsumerOrganizationName;
+        public string ProviderOrganizationName;
+        public string SchemaName;
+    }
+}

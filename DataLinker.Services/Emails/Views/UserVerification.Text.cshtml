@@ -1,0 +1,10 @@
+﻿@model DataLinker.Services.Emails.Models.UserVerificationEmail
+Content-Type: text/plain; charset=utf-8
+
+@Model.Name has registered with DataLinker using this email address.
+Please validate this email address by clicking on this link @Model.VerificationLink.
+If you did not register with DataLinker, just ignore this email.
+This link will be expired at @DateTime.Now.AddDays(7).ToString()
+
+@Model.DataLinkerHost
+Contact us: @Model.DataLinkerEmail

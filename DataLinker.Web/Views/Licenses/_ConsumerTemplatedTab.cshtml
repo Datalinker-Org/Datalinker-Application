@@ -1,0 +1,60 @@
+﻿@using DataLinker.Web.Helpers
+@model DataLinker.Models.BuildLicenseModel
+
+@using (Html.BeginForm("Create", "Licenses", FormMethod.Post, new { id = "BuildLicense" }))
+{
+    @Html.HiddenFor(model => Model.SchemaName)
+    @Html.HiddenFor(model => Model.IsProvider)
+    @Html.AntiForgeryToken()
+    <div class="jumbotron">
+        <p style="margin: 0 0 0">
+            Data Linker lets you set your own licence terms for this data schema by selecting optional clauses within a standard Licence Agreement template.
+            The standard licence template and full wording of clauses can be found on the Data Linker website.
+        </p>
+    </div>
+    var noClauses = true;
+    <table class="table">
+        @for (int i = 0; i < Model.Sections.Count; i++)
+        {
+            if (Model.Sections[i].Clauses.Count > 0)
+            {
+                noClauses = false;
+                @Html.HiddenFor(model => Model.Sections[i].Section.ID)
+                @Html.HiddenFor(model => Model.Sections[i].Section.Title)
+                @Html.HiddenFor(model => Model.Sections[i].ApplicationId)
+                <tr>
+                    <th>@Html.ValidationMessageFor(m => Model.Sections[i].SelectedClause, "", new { @class = "text-danger" }) @Html.DisplayFor(model => Model.Sections[i].Section.Title)</th>
+                </tr>
+                for (int j = 0; j < Model.Sections[i].Clauses.Count; j++)
+                {
+                    <tr>
+                        <td>
+                            <div>
+                                @Html.HiddenFor(model => Model.Sections[i].Clauses[j].ClauseTemplateId)
+                                @Html.HiddenFor(model => Model.Sections[i].Clauses[j].ClauseId)
+                                @Html.HiddenFor(model => Model.Sections[i].Clauses[j].Type)
+                                @Html.HiddenFor(model => Model.Sections[i].Clauses[j].LegalText)
+                                @Html.Hidden($"ChildModelType{i}{j}", Model.Sections[i].Clauses[j].GetType())
+                            </div>
+                            <div class="checkbox">
+                                <label>@Html.ClauseForConsumer(m => Model.Sections[i].SelectedClause, Model, i, j)</label>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+        }
+    </table>
+
+    if (noClauses)
+    {
+        <h4>No clauses to display</h4>
+    }
+    else
+    {
+        <span class="btn-group pull-left">
+            <button class="btn btn-primary" @(Model.IsPublishedProviderLicensePresent ? "" : "disabled=\"disabled\"") title="@(Model.IsPublishedProviderLicensePresent ? "Go to provider matches screen" : "No published provider licenses for this schema")"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span> Check Providers</button>
+        </span>
+    }
+    <br />
+}

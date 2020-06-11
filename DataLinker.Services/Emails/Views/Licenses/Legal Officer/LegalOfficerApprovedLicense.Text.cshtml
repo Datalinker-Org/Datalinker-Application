@@ -1,0 +1,9 @@
+﻿@model DataLinker.Services.Emails.Models.LegalOfficerApprovedLicenseEmail
+Content-Type: text/plain; charset=utf-8
+
+Hello @Model.Name,
+
+@(string.Format("You are the authorised signatory for {0} and have accepted the attached licence terms for provision of {1}. Your terms will now be available on DataLinker to consumers who might be interested in {1}. If they are willing to accept your terms and request access to your provider service, you will be notified and asked for approval.", Model.OrganizationName, Model.SchemaName))
+
+@Model.DataLinkerHost
+Contact us: @Model.DataLinkerEmail

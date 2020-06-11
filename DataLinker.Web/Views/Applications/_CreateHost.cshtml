@@ -1,0 +1,29 @@
+﻿@model DataLinker.Web.Models.Applications.ApplicationDetails
+
+<div class="modal fade" id="add-new-application-host" tabindex="-1" role="dialog" aria-labelledby="add-new-application-host" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Add host</h4>
+            </div>
+            <div class="modal-body">
+                <form id="add-new-host-form" action="@Url.Action("AddNewHost")" method="post">
+                    @Html.AntiForgeryToken()
+                    <p class="form-control-static">
+                        Enter the FQDN for the host from which API queries to the DataLinker service
+                        will originate.
+                    </p>
+                    <div>
+                        @Html.EditorFor(model => model.Host, new {htmlAttributes = new {@class = "form-control", @placeholder = "Your server's FQDN..."}})
+                        @Html.ValidationMessageFor(model => model.Host, "", new {@class = "text-danger"})
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary save-new-application-host-btn">Save</button>
+            </div>
+        </div>
+    </div>
+</div>

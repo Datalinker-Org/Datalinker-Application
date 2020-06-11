@@ -1,0 +1,352 @@
+﻿html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    /*padding-top: 50px;
+    padding-bottom: 20px;*/
+    background-color: #E4EBED;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin-bottom: 80px; /* Margin bottom by footer height */
+    /*font-size: 18px;*/
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 80px; /* Set the fixed height of the footer here */
+    /*line-height: 100px; */ /* Vertically center the text there */
+    /*background-color: #f5f5f5;*/
+}
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    margin-top:70px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Undo bootstrap's row's -15px left and right margin */
+.padded-row {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.tokenfield .token-input {
+    width: auto;
+}
+
+.panel-default > .panel-heading{
+    background-color:#1C6C8A;
+    color:#fff;
+    font-size:1.2em;
+}
+
+.panel-heading .btn {
+    margin-top: -5px;
+}
+
+.description-row {
+    padding-bottom: 15px;
+}
+
+.panel .table td {
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.title-btn-group {
+    padding-top: 14px;
+}
+.license-text {
+    resize: none;
+    width: 1000px;
+    height: 450px;
+    overflow:auto;
+}
+.large-font {
+    color:orange;
+    font-size: 23px;
+}
+.status-done {
+    color:green !important
+}
+
+div.disabled {
+    filter: alpha(opacity=65);
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    opacity: .5;
+    pointer-events: none;
+}
+
+hr{
+    border-top:1px #A2BEC6 solid;
+}
+
+a{
+    color:#1C6C8A;
+}
+
+.authDetail label{
+    text-align:right;
+}
+
+.authDetail a{
+    color:blue;
+}
+
+.authDetail a:hover{
+    text-decoration:underline;
+    color:blue;
+}
+.overlay {
+    position: fixed; /* Sit on top of the page content */
+    display: none; /* Hidden by default */
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+    z-index: 1060; /* Specify a stack order in case you're using a different order for other elements */
+}
+
+.form-group.required .control-label:after {
+    content: "*";
+    color: red;
+    font-weight: bold;
+}
+
+.license-tab-content{
+    padding:20px;
+    background-color:#fff
+}
+
+.side-text {
+    color: #777
+}
+.badge-number {
+    font-size: 14px
+}
+
+/*********************************************************/
+/*                        Buttons                        */
+/*********************************************************/
+.btn-default, .btn-success, .btn-primary{
+    color:#333;
+    background-color: #A9EBD1;
+    border-color: #87DDBB;
+    min-width:100px;
+}
+
+.btn-default:hover,
+.btn-default:active,
+.btn-default:focus,
+.btn-success:hover,
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:focus{
+    color:black;
+    background-color: #DFFFF2;
+    border-color: #87DDBB;
+    box-shadow:none;
+}
+
+.btn.disabled, .btn[disabled], fieldset[disabled] .btn{
+    background-color:#E8E8E8;
+    border-color:#d1d1d1;
+    opacity:1;
+    color:#ababab;
+}
+
+.close{
+    color:white;
+    opacity:0.5;
+}
+
+.close:hover, .close:focus{
+    color:white;
+    opacity:1;
+}
+
+.btn-default.disabled:hover, .btn-default[disabled]:hover, fieldset[disabled] .btn-default:hover, .btn-default.disabled:focus, .btn-default[disabled]:focus, fieldset[disabled] .btn-default:focus, .btn-default.disabled.focus, .btn-default[disabled].focus, fieldset[disabled] .btn-default.focus{
+    background-color:#E8E8E8;
+    border-color:#d1d1d1;
+}
+
+.btn-primary:active:hover, .btn-primary.active:hover, .open > .dropdown-toggle.btn-primary:hover, .btn-primary:active:focus, .btn-primary.active:focus, .open > .dropdown-toggle.btn-primary:focus, .btn-primary:active.focus, .btn-primary.active.focus, .open > .dropdown-toggle.btn-primary.focus{
+    color:black;
+    background-color: #DFFFF2;
+    border-color: #87DDBB;
+}
+
+/*********************************************************/
+/*                  Dropdown Buttons                     */
+/*********************************************************/
+.open > .dropdown-toggle.btn-default,
+.open > .dropdown-toggle.btn-default:hover,
+.open > .dropdown-toggle.btn-default:focus,
+.open > .dropdown-toggle.btn-default.focus,
+.btn-default:active:hover, 
+.btn-default.active:hover, 
+.btn-default:active:focus, 
+.btn-default.active:focus,
+.btn-default:active.focus,
+.btn-default.active.focus
+{
+    color:black;
+    background-color: #DFFFF2;
+    border-color: #87DDBB;
+    box-shadow:none;
+
+}
+
+.btn-group.open .dropdown-toggle{
+    box-shadow:none;
+}
+
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus{
+    background-color: #DFFFF2;
+}
+
+
+/*********************************************************/
+/*                        Table                          */
+/*********************************************************/
+table tbody tr th {
+    background: #1c6c8a;
+    color: white;
+}
+
+table{
+    background:white;
+}
+
+
+
+
+/*********************************************************/
+/*                        Nav Bar                        */
+/*********************************************************/
+.navbar-inverse{
+    background-color: #1c6c8a;
+    border-style:none;
+}
+
+.navbar-inverse .navbar-nav > li > a{
+    color:#C9E5E3;
+}
+
+    .navbar-inverse .navbar-nav > li > a:hover {
+        color: #fff;
+    }
+
+.navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus{
+    background-color:#1c6c8a;
+}
+
+.navbar-brand{
+    padding:0;
+    margin:10px 30px 10px 0;
+    background-image:url(imgs/weblogo2.png);
+    width:81px;
+    height:50px;
+}    
+
+.navbar-nav{
+    margin-top:20px;
+}
+
+@media (min-width:768px){
+    .navbar > .container .navbar-brand, .navbar > .container-fluid .navbar-brand{
+        margin-left:0;
+    }
+
+}
+
+@media (max-width: 767px){
+    .navbar-inverse .navbar-nav .open .dropdown-menu > li > a {
+        color: #C9E5E3;
+    }
+
+    .navbar-brand{
+        margin-left:10px;
+    }
+}
+
+.navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:focus{
+    background-color: #94d2b9;
+}
+
+.navbar-inverse .navbar-toggle{
+    border-color: #94D2B9;
+    background-color: #94d2b9;
+}
+
+.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form{
+    border-color:#1C6C8A;
+}
+
+/*********************************************************/
+/*                     Popup Dialog                      */
+/*********************************************************/
+.modal-content{
+background-color:#E4EBED;
+}
+
+.modal-footer{
+    background-color:#1C6C8A;
+}
+
+.modal-header{
+    color:white;
+    background-color:#1C6C8A;
+}
+
+.bootstrap-dialog.type-primary .modal-header{
+    background-color:#1C6C8A;
+}
+
+/*********************************************************/
+/*                     Error message                     */
+/*********************************************************/
+.text-danger{
+    color:red;
+}
+
+
+
+/*********************************************************/
+/*                     Vertical Nav                      */
+/*********************************************************/
+.nav-pills > li.active > a,
+.nav-pills > li.active > a:hover,
+.nav-pills > li.active > a:focus{
+    color: black;
+    background-color: #A9EBD1;
+    border: #87DDBB 1px solid;
+}
+
+.nav-pills > li > a{
+    border:1px solid #E4EBED;
+}
+
+.nav-pills > li > a:hover,
+.nav-pills > li > a:focus{
+    background-color:#DFFFF2;
+    border:1px solid #87DDBB;
+    color:black;
+}
+

@@ -1,0 +1,50 @@
+﻿@using DataLinker.Web.Helpers
+@model DataLinker.Models.LicenseConfirmModel
+
+<div id="ConfirmationScreenUI">
+    <div class="form-horizontal">
+        <h4>License terms & conditions</h4>
+        <hr />
+        <div class="form-group">
+            <div class="col-md-10">
+                <div class="license-text">@Html.Raw(Model.LicenseContent)</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-9">
+                <div class="checkbox">
+                    <label><input class="terms-and-conditions" type="checkbox" id="acceptTnC" name="IsAgreeWithTerms" value="true" />I am authorised by @Model.OrganizationName to execute legal contracts on its behalf</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-9">
+                <div class="checkbox">
+                    <label><input class="authorisedBy" type="checkbox" id="authorisedBy" name="IsAgreeWithTerms" value="true" />on behalf of @Model.OrganizationName, I have read this Licence Agreement</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-9">
+                <div class="checkbox">
+                    <label><input class="agreeOnBehalf" type="checkbox" id="agreeOnBehalf" name="IsAgreeWithTerms" value="true" />on behalf of @Model.OrganizationName, I agree to @(Model.IsProvider ? "provide" : "recieve") data and on these licence terms</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-9">
+                <a href="@Url.Action("ConsumerDecline","LicenseVerification", new {id = Model.ID})" class="btn btn-danger">
+                    Decline
+                </a>
+                <a href="@Url.Action("ConsumerApprove","LicenseVerification", new {id = Model.ID})" id="control-panel" class="btn btn-success hidden">
+                    Approve
+                </a>
+            </div>
+        </div>
+        <h5><b>Have problems with displaying?</b> Use FireFox or Google Chrome to open this page.</h5>
+    </div>
+</div>
+@section scripts
+{
+    @Html.InitPageMainModule("confirmationScreen")
+}

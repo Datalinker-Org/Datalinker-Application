@@ -1,0 +1,24 @@
+﻿@using DataLinker.Web.Helpers
+@model DataLinker.Models.ConsumerProviderRegistration.ConsumerProviderRegistrationDetail
+<div style="margin-top: 20px;">
+    <div style="font-size: 30px; font-weight:500;">@Model.ConsumerApplicationName</div>
+    <div style="font-size: 20px; font-weight:500;">Request access to @Model.SchemaName from @Model.ProviderApplicationName</div>
+    <br />
+    <br />
+    <br />
+    <div style="text-align: center;">
+        Thank you for approving the Data Agreement.
+        <br />
+        <br />
+        An email has been sent to @Model.ProviderApplicationName. If they agree to allow you to access, you will receive confirmation and they will contact you to issue access keys.
+        <br />
+        <br />
+        <br />
+        <a href="@ViewBag.PreviousUrl"><u><b>Go back to @Model.SchemaName</b></u></a>
+    </div>
+</div>
+@section scripts
+{
+    @Html.InitPageMainModule(string.Empty)
+}
+

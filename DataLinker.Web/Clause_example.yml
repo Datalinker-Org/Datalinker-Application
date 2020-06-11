@@ -1,0 +1,14 @@
+---
+- title: Attribution
+  clauses:
+   - short_text	: No.
+     description	: 
+      Data used under this license does not require any attribution.
+     legal_text	: No attribution required.
+     order_number	: 1
+   - short_text	: Yes.
+     description	: 
+      All data usage must carry the specified attribution text on both
+      straight reproductions and derivitave works.
+     legal_text	: Data usage must be attributed to {}
+     order_number	: 2

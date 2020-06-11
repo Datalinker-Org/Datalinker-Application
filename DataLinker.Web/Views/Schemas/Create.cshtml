@@ -1,0 +1,83 @@
+﻿@model DataLinker.Web.Models.Schemas.SchemaModel
+
+@using DataLinker.Models.Enums
+@using DataLinker.Web.Helpers
+
+<h2>Add Schema
+
+    <span class="pull-right">
+        <a href="@ViewBag.PreviousUrl" class="btn btn-default">
+            <span class="glyphicon glyphicon-chevron-left"></span> Back
+        </a>
+    </span>
+</h2>
+    @using (Html.BeginForm("Create", "Schemas", FormMethod.Post, new {enctype = "multipart/form-data"}))
+    {
+        var status = Model.Status;
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <hr/>
+            @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+
+            @Html.HiddenFor(model => model.DataSchemaID, new {id = "DataSchemaID"})
+            @Html.HiddenFor(model => model.Status)
+            @Html.Hidden("InitialName", Model.Name)
+            <div class="form-group">
+                <div class="col-md-offset-2 col-sm-4">
+                    <input type="file" name="UploadFile" accept=".xml,.json,.jsonld"/>
+                    @Html.ValidationMessageFor(model => model.UploadFile, "", new { @class = "text-danger" })
+                    <h5>
+                        <small>Supported formats: XML, JSON.</small>
+                    </h5>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, htmlAttributes: new {@class = "control-label col-md-2"})
+                <div class="col-sm-4">
+                    @Html.EditorFor(model => model.Name, new {htmlAttributes = new {@class = "form-control"}})
+                    @Html.ValidationMessageFor(model => model.Name, "", new {@class = "text-danger"})
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.PublicId, htmlAttributes: new {@class = "control-label col-md-2"})
+                <div class="col-sm-4">
+                    @Html.EditorFor(model => model.PublicId, new {htmlAttributes = new {@class = "form-control"}})
+                    @Html.ValidationMessageFor(model => model.PublicId, "", new {@class = "text-danger"})
+                    <h5>
+                        <small>Schema ID should be in URN format urn:nz:pri:dl:animal.core</small>
+                    </h5>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Description, htmlAttributes: new {@class = "control-label col-md-2"})
+                <div class="col-sm-4">
+                    @Html.TextAreaFor(model => model.Description, new {@class = "form-control"})
+                    @Html.ValidationMessageFor(model => model.Description, "", new {@class = "text-danger"})
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-sm-4 checkbox">
+                    <label>@Html.EditorFor(model => model.IsIndustryGood) Is this schema Industry Good?</label>
+                    @Html.ValidationMessageFor(model => model.IsIndustryGood, "", new {@class = "text-danger"})
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-sm-4 checkbox">
+                    <label>@Html.EditorFor(model => model.IsAggregate) Is this schema Aggregate?</label>
+                    @Html.ValidationMessageFor(model => model.IsAggregate, "", new {@class = "text-danger"})
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-sm-4">
+                    <input type="submit" value="Save" class="btn btn-success"/>
+                </div>
+            </div>
+        </div>
+    }
+@section scripts
+{
+    @Html.InitPageMainModule(string.Empty)
+}

@@ -1,0 +1,151 @@
+﻿@using DataLinker.Models.Enums
+@using DataLinker.Web.Helpers
+@*@model List<DataLinker.Models.Applications.ProviderModel>*@
+@model DataLinker.Models.ConsumerProviderRegistration.SchemaProviderVm
+    <div id="schema-providers-ui">
+        <h2>
+            Providers for the @Model.SchemaName
+            <span class="pull-right">
+                <a href="@ViewBag.PreviousUrl" class="btn btn-default">
+                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Back
+                </a>
+            </span>
+        </h2>
+
+        @if (Model.Providers.Count() == 0)
+        {
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Available providers</div>
+
+                        <table class="table">
+                            <tr><td>There are no providers.</td></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="jumbotron">
+                <div class="row">
+                    <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> You can choose one or more providers you wish to connect to. Click on Download to view the provider data agreement terms. Clicking on  "Agree and Request access" will send a request for approval on your behalf to the legal officer of the provider organisation.
+                </div>
+            </div>
+        }
+
+        @if (Model.Providers.Where(p => p.Status != ConsumerProviderRegistrationStatus.NotRegistered).Count() > 0)
+        {
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Providers you've registered with</div>
+                        <table class="table">
+                            @foreach (var item in Model.Providers.Where(p => p.Status != ConsumerProviderRegistrationStatus.NotRegistered))
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem => item.ApplicationName)</td>
+                                    <td style="width: 60%">
+                                        <table style="width: 100%">
+                                            <tr>
+                                                <td style="width: 25%">Terms: </td>
+                                                <td>
+                                                    @*<a href="@Url.Action("DownloadLicense", new { appId = item.ApplicationId, schemaId = Model.SchemaId, licenseId = item.LicenseId })">*@
+                                                    <a href="@Url.Action("Download", "Licenses", new { appId = item.ApplicationId, schemaId = Model.SchemaId, id = item.LicenseId })">
+                                                        <u>Download</u>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            @foreach (var clause in item.LicenseClauses)
+                                            {
+                                                if (clause.Title == "Payment")
+                                                {
+                                                    <tr><td>Payment:</td><td>@clause.OrgText</td></tr>
+                                                }
+                                            }
+                                        </table>
+                                    </td>
+                                    <td style="text-align: left">
+                                        @if (item.Status == ConsumerProviderRegistrationStatus.PendingConsumerApproval)
+                                        {
+                                            <span style="color: orange; font-weight: 500">Pending consumer legal approval</span>
+                                        }
+                                        else if (item.Status == ConsumerProviderRegistrationStatus.PendingProviderApproval)
+                                        {
+                                            <span style="color:blue; font-weight: 500">Pending provider legal approval</span>
+                                        }
+                                        else if (item.Status == ConsumerProviderRegistrationStatus.Approved)
+                                        {
+                                            <span style="color:green; font-weight: 500">Approved</span>
+                                        }
+                                        else if (item.Status == ConsumerProviderRegistrationStatus.Declined)
+                                        {
+                                            <span style="color: red; font-weight: 500">Declined</span>
+                                            <br />
+                                            <span>@item.Remarks</span>
+                                            <br />
+                                            <a data-url="@Url.Action("RequestProviderAccess", new { consumerAppId = ViewBag.ConsumerAppId, providerLicenseId = item.LicenseId })" data-success-url="@Url.Action("Index", "ConsumerProviderRegistration", new { consumerAppId = ViewBag.ConsumerAppId, schemaId = Model.SchemaId })" data-schema-name="@Model.SchemaName" data-provider-name="@item.ApplicationName" class="btn btn-default btn-sm request-access">
+                                                <span aria-hidden="true"></span> Agree &amp; request access
+                                            </a>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if (Model.Providers.Where(p => p.Status == ConsumerProviderRegistrationStatus.NotRegistered).Count() > 0)
+        {
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Available providers</div>
+                        <table class="table">
+                            @foreach (var item in Model.Providers.Where(p => p.Status == ConsumerProviderRegistrationStatus.NotRegistered))
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem => item.ApplicationName)</td>
+                                    <td style="width: 60%">
+                                        <table style="width: 100%">
+                                            <tr>
+                                                <td style="width: 25%">Terms: </td>
+                                                <td>
+                                                    @*<a href="@Url.Action("DownloadLicense", new { appId = item.ApplicationId, schemaId = Model.SchemaId, licenseId = item.LicenseId })">*@
+                                                    <a href="@Url.Action("Download", "Licenses", new { appId = item.ApplicationId, schemaId = Model.SchemaId, id = item.LicenseId })">
+                                                        Download
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            @foreach (var clause in item.LicenseClauses)
+                                            {
+                                                if (clause.Title == "Payment")
+                                                {
+                                                    <tr><td>Payment:</td><td>@clause.OrgText</td></tr>
+                                                }
+                                            }
+                                        </table>
+                                    </td>
+                                    <td style="text-align: left">
+                                        <a data-url="@Url.Action("RequestProviderAccess", new { consumerAppId = ViewBag.ConsumerAppId, providerLicenseId = item.LicenseId })" data-success-url="@Url.Action("Index", "ConsumerProviderRegistration", new { consumerAppId = ViewBag.ConsumerAppId, schemaId = Model.SchemaId })" data-schema-name="@Model.SchemaName" data-provider-name="@item.ApplicationName" class="btn btn-default btn-sm request-access">
+                                            <span aria-hidden="true"></span> Agree &amp; request access
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="view-license-modal-location"></div>
+    </div>
+@section scripts
+{
+    @Html.InitPageMainModule("schema-providers")
+}
+
+

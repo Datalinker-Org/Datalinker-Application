@@ -1,0 +1,37 @@
+﻿@model String
+
+<div class="modal fade" id="software-stmt-modal" tabindex="-1" role="dialog" aria-labelledby="software-statement" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="software-smtm-title">Software statement</h4>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div>
+                        <p>
+                            This is a JSON Web Token which verifies its acceptance of licence terms and which must be stored and used to interact with a Provider Service.
+                            The Software Statement is a cryptographically secure digital record of the Consumer's agreement to licence terms.
+                        </p>
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default copy-stmt" type="button">
+                                    <span class="glyphicon glyphicon-copy" aria-hidden="true"></span> Copy
+                                </button>
+                            </span>
+                            <input id="stmt-display" type="text" class="form-control" value="@Model">
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary update-stmt-btn">Update</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,12 @@
+﻿@using DataLinker.Models.Enums
+@using DataLinker.Services.Helpers
+
+@model DataLinker.Services.Emails.Models.OrganizationStateChangedEmail
+Content-Type: text/plain; charset=utf-8
+
+Hello @Model.Name,
+
+@Model.OrganizationName status has been changed to @Model.State. @(Model.State == ActivationState.Active.GetDescription() ? "You can use the DataLinker to select or change data schema and licence provisions for your organisation." : String.Format("Please contact [{0}]  if you have any questions.",Model.DataLinkerEmail))
+
+@Model.DataLinkerHost
+Contact us: @Model.DataLinkerEmail

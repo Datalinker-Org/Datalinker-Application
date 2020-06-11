@@ -1,0 +1,97 @@
+﻿@using DataLinker.Web.Helpers
+@model DataLinker.Models.ProviderComparisonSummary
+@{
+    ViewBag.Title = "Provider Matches";
+}
+<div id="schemaProvidersUI">
+    <h3>
+        "@Model.SchemaName" providers
+        <span class="pull-right">
+            <a href="@ViewBag.PreviousUrl" class="btn btn-default">
+                <span class="glyphicon glyphicon-chevron-left"></span> Back
+            </a>
+        </span>
+    </h3>
+    @using (Html.BeginForm("FindSchemaProviders", "Licenses", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <div class="jumbotron">
+            <p style="margin: 0 0 0">
+                These Provider services offer this data schema. The table shows where their licence terms match the terms you have selected.
+                You will be able to execute a data sharing agreement and receive data from those Providers indicated as a "Match".
+                Go "Back" to change or add licence selections, or "Save" to confirm your selections.
+            </p>
+        </div>
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => Model.OrganizationName)
+                    @Html.HiddenFor(model => Model.OrganizationName)
+                </th>
+                @*@for (var i = 0; i < Model.SectionNames.Count; i++)
+                    {
+                        <th>
+                            @Html.DisplayFor(model => Model.SectionNames[i])
+                            @Html.HiddenFor(model => Model.SectionNames[i])
+                        </th>
+                    }*@
+                <th>Is Match</th>
+            </tr>
+            @for (var i = 0; i < Model.Endpoints.Count; i++)
+            {
+                @Html.HiddenFor(model => Model.Endpoints[i].OrganizationName)
+                @Html.HiddenFor(model => Model.Endpoints[i].EndpointName)
+                @Html.HiddenFor(model => Model.Endpoints[i].EndpointId)
+                @Html.HiddenFor(model => Model.Endpoints[i].ProviderLicenseId)
+                @Html.HiddenFor(model => Model.Endpoints[i].IsMatch)
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => Model.Endpoints[i].OrganizationName)
+                    </td>
+                    @*@foreach (string sectionName in Model.SectionNames)
+                        {
+                            var item = Model.Endpoints[i].Clauses.FirstOrDefault(p => p.SectionName == sectionName);
+                            if (item == null)
+                            {
+                                <td>None</td>
+                            }
+                            else
+                            {
+                                @Html.HiddenFor(model => item.Value)
+                                @Html.HiddenFor(model => item.IsMatched)
+                                @Html.HiddenFor(model => item.ClauseId)
+                                <td>
+                                    @Html.DisplayFor(model => item.Value)
+                                    @if (item.IsMatched)
+                                    {
+                                        <span class="glyphicon glyphicon-ok"></span>
+                                    }
+                                    else
+                                    {
+                                        <span class="glyphicon glyphicon-remove" title="@Html.DisplayFor(model => item.Message)"></span>
+                                    }
+                                </td>
+                            }
+                        }*@
+                    <td>
+                        <a class="btn btn-default request-access" data-url="@Url.Action("RequestProviderAccess", "Licenses", new {licenseId = Model.Endpoints[i].ProviderLicenseId})" data-schema-name="@Model.SchemaName" data-provider-name="@Model.Endpoints[i].OrganizationName">
+                            <span class="glyphicon glyphicon-chevron-left"></span> Request Access
+                        </a>
+                    </td>
+                </tr>
+            }
+        </table>
+
+        <span class="btn-group pull-right">
+            <button class="btn btn-primary" @(Model.Endpoints.All(i => i.IsMatch == false) ? "disabled=\"disabled\"" : "") title="@(Model.Endpoints.All(i => i.IsMatch == false) ? "No matches to save" : "Save")"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Save</button>
+        </span>
+        <br />
+        <br />
+        <br />
+        @Html.Partial("_HelpDetails")
+    }
+</div>
+@section scripts
+{
+    @Html.InitPageMainModule("schema-providers")
+}

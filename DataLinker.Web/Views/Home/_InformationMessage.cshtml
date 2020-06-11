@@ -1,0 +1,37 @@
+﻿@using DataLinker.Models
+@model DashboardModel
+
+<div class="jumbotron account-ui">
+    <h3>
+        <span class="glyphicon glyphicon-warning-sign btn-sm large-font" aria-hidden="true"></span>
+        Registration status
+    </h3>
+    <p>
+        <ul class="list-group">
+            <li class="list-group-item disabled status-done">
+                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                Register organisation
+            </li>
+            <li class="list-group-item @(Model.LegalRegistration == LegalRegistrationStatus.NotFound ? "":"disabled") @(Model.LegalRegistration > LegalRegistrationStatus.NotFound ? "status-done":"")">
+                @if (Model.LegalRegistration > LegalRegistrationStatus.NotFound)
+                {<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>}
+                Register legal officer for organisation to approve licence terms as these will lead to a legally binding data sharing agreement.
+                You may register yourself as a Legal Officer by <a class="account-edit-btn" href="#" data-url='@Url.Action("Edit", "Account", new { userId = (ViewData["LoggedInUser"] as LoggedInUserDetails).ID })'>updating your profile</a>, or <a href="@Url.Action("Index", "Account", new {organizationId = Model.OrganizationID})">Add Colleague</a> to set up another user as the Legal Officer.
+            </li>
+            <li class="list-group-item @(Model.LegalRegistration == LegalRegistrationStatus.NotCompleted ? "":"disabled") @(Model.LegalRegistration > LegalRegistrationStatus.NotCompleted ? "status-done":"")">
+                @if (Model.LegalRegistration > LegalRegistrationStatus.NotCompleted)
+                {<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>}
+                Legal officer to confirm E-mail address
+            </li>
+            <li class="list-group-item @(Model.LegalRegistration == LegalRegistrationStatus.NotVerified ? "":"disabled") @(Model.LegalRegistration > LegalRegistrationStatus.NotVerified ? "status-done":"")">
+                @if (Model.LegalRegistration > LegalRegistrationStatus.NotVerified)
+                {<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>}
+                DataLinker support team to confirm legal officer registration
+            </li>
+            <li class="list-group-item @(Model.LegalRegistration == LegalRegistrationStatus.Completed && !Model.IsActive? "":"disabled")">
+                DataLinker support team to activate organisation
+            </li>
+            <li class="list-group-item disabled"> Registration completed</li>
+        </ul>
+    </p>
+</div>

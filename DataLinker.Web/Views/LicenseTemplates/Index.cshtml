@@ -1,0 +1,93 @@
+﻿@using DataLinker.Models.Enums
+@using DataLinker.Web.Helpers
+@using PagedList.Mvc
+@model DataLinker.Web.Models.Licenses.LicenseTemplatesModel
+
+@{
+    ViewBag.Title = "Licenses";
+}
+
+<h2>
+    License Templates
+    <span class="pull-right">
+        <a href="@ViewBag.PreviousUrl" class="btn btn-default">
+            <span class="glyphicon glyphicon-chevron-left"></span> Back
+        </a>
+    </span>
+</h2>
+
+<div class="jumbotron">
+    Manage license templates here.
+</div>
+<div class="pull-left btn-group" role="group">
+    <a href="@Url.Action("Create")" class="btn btn-success">
+        <span class="glyphicon glyphicon-plus"></span> Add
+    </a>
+    <a href="@Url.Action("Index", new {includeRetracted = !(bool) Model.IncludeRetracted})" class="btn btn-default">
+        @(Model.IncludeRetracted ? "Hide Retracted" : "Show Retracted")
+    </a>
+    <div class="btn-group">
+        <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Reports <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+            <li>
+                <a href="@Url.Action("GenerateReport")">
+                    License Agreements
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<br />
+<br />
+<div id="licenseTemplatesUI">
+    <table class="table">
+        <tr>
+            <th>
+                Template
+            </th>
+            <th>
+            </th>
+        </tr>
+
+        @foreach (var item in Model.Templates)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                    @Html.StatusLabelTemplate(item.Status)
+                    <div><small class="side-text">Created at: @Html.DisplayFor(modelItem => item.CreatedAt)</small></div>
+                </td>
+                <td>
+                    <span class="btn-group pull-right">
+                        <a href="@Url.Action("Download", new {fileId = item.ID})" class="btn btn-default btn-sm">
+                            <span class="glyphicon glyphicon-download-alt"></span> Download
+                        </a>
+                        <a href="#" class="retract btn btn-default btn-sm @(item.IsRetracted ? "disabled" : "")" title="Retract license" data-url="@Url.Action("Retract", new {id = item.ID})">
+                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Retract
+                        </a>
+                        <a href="@Url.Action("Details", new {id = item.ID})" class="btn btn-default btn-sm">
+                            <span class="glyphicon"></span> View
+                        </a>
+                        <a href="@Url.Action("Edit", new {id = item.ID})" class="btn btn-default btn-sm @(item.Status == TemplateStatus.Retracted ? "disabled" : "")">
+                            <span class="glyphicon glyphicon-pencil"></span> Edit
+                        </a>
+                        <a href="#" class="publish btn btn-default btn-sm @(item.IsActive ? "disabled" : "")" data-url="@Url.Action("Publish", new {id = item.ID})" data-has-published-template="@Model.IsActivePresent">
+                            <span class="glyphicon glyphicon-upload" aria-hidden="true" title="Publish license"></span> Publish
+                        </a>
+                    </span>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+@if (Model.Templates.PageCount > 1)
+{
+    @Html.PagedListPager(Model.Templates, page => Url.Action("Index",
+                new { page, includeRetracted = (bool)Model.IncludeRetracted }))
+}
+@section scripts
+{
+    @Html.InitPageMainModule("licenseTemplates")
+}

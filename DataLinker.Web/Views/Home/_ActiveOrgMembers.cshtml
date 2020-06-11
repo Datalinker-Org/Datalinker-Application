@@ -1,0 +1,19 @@
+﻿@model IEnumerable<DataLinker.Models.UserDetailsModel>
+
+<table class="table">
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @if (item.IsLegalOfficer)
+                {
+                    <label class="label label-success">Legal officer</label>
+                }
+            </td>
+        </tr>
+    }
+
+</table>

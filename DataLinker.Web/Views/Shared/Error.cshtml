@@ -1,0 +1,9 @@
+﻿@using DataLinker.Web.Helpers
+@model DataLinker.Web.Models.ErrorModel
+
+<h2 class="text-center">@Model.Message</h2>
+<h2 class="text-center"><small>If you continue to experience this, please contact DataLinker team: support@datalinker.org</small></h2>
+@section scripts
+{
+    @Html.InitPageMainModule(string.Empty)
+}

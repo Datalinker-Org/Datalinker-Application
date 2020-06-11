@@ -1,0 +1,63 @@
+﻿@using DataLinker.Web.Helpers
+@model DataLinker.Web.Models.Users.OrganisationUsers
+
+
+<table class="table">
+    <tr>
+        <th>
+            Full Name
+        </th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>
+            Is active
+        </th>
+        <th></th>
+    </tr>
+        @foreach (var item in Model.Users)
+        {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+
+            @if (item.IsLegalOfficer)
+            {
+            <label class="label label-success">Legal Officer</label>
+            }
+            else
+            {
+                if (Model.IsForSysAdmin && item.IsIntroducedAsLegalOfficer)
+                {
+            <div>
+                <span class="glyphicon glyphicon-question-sign" title="This user introduced as Legal Officer for this organization. Please, check this information with organization and Confirm or Reject."></span> Awaiting check of Legal Officer Status:
+            </div>
+
+            <div class="btn-group btn-group-xs">
+                <button type="button" class="btn btn-danger btn-xs" id="decline-legal-officer" data-id="@item.ID" data-url="@Url.Action("DeclineLegalOfficer", new { id = item.ID })">
+                    <span class="glyphicon glyphicon-remove"></span> Reject
+                </button>
+                <button type="button" class="btn btn-success btn-xs" id="approve-legal-officer" data-id="@item.ID" data-url="@Url.Action("ApproveLegalOfficer", new { id = item.ID })">
+                    <span class="glyphicon glyphicon-ok"></span> Confirm
+                </button>
+            </div>
+                }
+            }
+        </td>
+        <td>@Html.DisplayFor(modelItem => item.Email)</td>
+        <td>@Html.DisplayFor(modelItem => item.Phone)</td>
+        <td>
+            @Html.CheckBoxForActivationStatus(modelItem => item.IsActive, item, Model.IsForSysAdmin, Url.Action("ChangeStatus", "Account", new { id = item.ID }))
+        </td>
+        @if (Model.IsForSysAdmin)
+        {
+        <td>
+            <span class="btn-group pull-right">
+                <a href="" class="account-edit-btn btn btn-default btn-sm" data-url="@Url.Action("Edit", "Account", new { userId = item.ID })">
+                    <span class="glyphicon glyphicon-pencil"></span> Edit
+                </a>
+            </span>
+        </td>
+        }
+    </tr>
+        }
+</table>

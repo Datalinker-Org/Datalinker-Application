@@ -1,0 +1,66 @@
+﻿@model DataLinker.Services.Emails.Models.NewLegalOfficerEmail
+Content-Type: text/html; charset=utf-8
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="@Model.UrlToStylesFile">
+</head>
+<body>
+    <table border="0" cellpadding="0" cellspacing="0" width="600">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td height="60" class="container-logo responsive-image">
+                            <img src="@Model.UrlToImageInEmail" width="60" alt="dataLinker" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 30px 30px 0px 30px; vertical-align: top">
+                            <div style="font-size: 24px; color: #444; padding-bottom: 20px; font-weight: bold;">Legal Officer registration</div>
+                            <div style="font-size: 14px;">
+                                <p>Hello @Model.Name,</p>
+                                <p>@Model.OrganizationName has registered a new Legal Officer. Please check with the organisation’s key contact and approve or decline this registration.</p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 20px 30px 30px 30px; vertical-align: top">
+                            <div style="font-size: 14px; color: #767676">
+                                If you require help, please don't hesitate to contact us by email: <a href="mailto:@(Model.DataLinkerEmail)" class="email" style="color: #5f5f5f;">@Model.DataLinkerEmail</a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td bgcolor="#1C6C8A" style="padding: 15px 0 15px 30px; color: #FFFFFF;" height="50">
+                            <table border="0" cellpadding="0" cellspacing="0" align="left" width="49%">
+                                <tr>
+                                    <td>
+                                        <div class="footer">
+                                            <a href="@Model.DataLinkerHost" class="email">www.datalinker.org</a>
+                                            <br>
+                                            <span style="color: white">Email us to</span> <a href="mailto:@(Model.DataLinkerEmail)" class="email">@Model.DataLinkerEmail</a>
+                                            <br>
+                                            <br>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table border="0" cellpadding="0" cellspacing="0" align="right" width="49%">
+                                <tr>
+                                    <td>
+                                        <div class="footer"></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

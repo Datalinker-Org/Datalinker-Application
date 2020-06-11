@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html>
+<html ng-app="app" ng-controller="LayoutCtrl">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>{siteName}</title>
+    <link href="{contentPath}/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="{contentPath}/app/app.css" rel="stylesheet">
+    <link href="{contentPath}/css/{brand}.css" rel="stylesheet" />
+</head>
+<body lang="en">
+    <div class="headerWrapper">
+        <div class="navbar-header container">
+            <!--<span class="navbar-brand">{siteName}</span>-->
+            <div class="navbar-brand"></div>
+
+            <ul class="nav navbar-nav" ng-show="model.currentUser" ng-cloak>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{model.currentUser}} <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{model.logoutUrl}}">Logout</a></li>
+                        <li class="divider" ng-show="model.loginWithDifferentAccountUrl"></li>
+                        <li><a href="{{model.loginWithDifferentAccountUrl}}" ng-show="model.loginWithDifferentAccountUrl">Login With Different Account</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class='container page-login' ng-cloak>
+        <div class="row">
+            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-6 align-center">
+                <div class="page-header hide">
+                    <h1>Reset Password</h1>
+                </div>
+            </div>
+         </div>
+        <div class="row" ng-show="model.errorMessage">
+            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-6 align-center">
+                <div class="alert alert-danger">
+                    <strong>Error:</strong>
+                    {{model.errorMessage}}
+                </div>
+            </div>
+        </div>
+
+        <div class="row" ng-show="model.successMessage">
+            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-6 align-center">
+                <div class="alert alert-success">
+                    <strong>Success:</strong>
+                    {{model.successMessage}}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-6 align-center">
+                Please enter your e-mail address to send a password reset request
+                <br />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-6 align-center">
+                <div class="panel panel-default">
+                    <div class="panel-heading brand-colors">
+                        <h3 class="panel-title">Reset Password</h3>
+                    </div>
+                    <div class="panel-body">
+                        <form name="form" method="post" action="{{model.ResetUrl}}">
+                            <anti-forgery-token token="model.antiForgery"></anti-forgery-token>
+                            <fieldset>
+                                <div class="form-group">
+                                    <label for="email">E-Mail address</label>
+                                    <input required email id="email" name="email" type="text" class="form-control" placeholder="Email address" ng-model="model.email" maxlength="100" autocomplete="off">
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-primary brand-colors" ng-disabled="form.$invalid">Reset Password</button>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+            <script id='modelJson' type='application/json'>
+                {model}
+            </script>
+            <script src="{contentPath}/libs/jquery/jquery-1.11.0.min.js"></script>
+            <script src="{contentPath}/libs/bootstrap/js/bootstrap.min.js"></script>
+            <script src="{contentPath}/libs/angular/angular.1.2.13.min.js"></script>
+            <script src="{contentPath}/libs/encoder/encoder.min.js"></script>
+            <script src="{contentPath}/forgotten_password/app.js"></script>
+</body>
+</html>
+
+

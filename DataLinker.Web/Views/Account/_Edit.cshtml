@@ -1,0 +1,83 @@
+﻿@using DataLinker.Models
+@model DataLinker.Web.Models.Users.UserModel
+
+@{
+    ViewBag.Title = "Edit";
+}
+@{ var isAdmin = (ViewData["LoggedInUser"] as LoggedInUserDetails).IsSysAdmin;}
+
+<div class="modal fade" id="edit-account-modal" tabindex="-1" role="dialog" aria-labelledby="edit-account" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button role="button" type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="edit-account">Edit profile</h4>
+            </div>
+            <div class="modal-body">
+                <form id="account-edit-form" action="@Url.Action("Edit", "Account", new {userId = Model.ID})" method="post">
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.HiddenFor(model => model.ID)
+                        @Html.Hidden("InitialEmail", Model.Email)
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-3" })
+                            <div class="col-sm-8">
+                                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-3" })
+                            <div class="col-sm-8">
+                                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-3" })
+                            <div class="col-sm-8">
+                                @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-3"></div>
+                            <div class="col-sm-8 checkbox">
+                                <label>
+                                    @Html.CheckBoxFor(model => model.IsIntroducedAsLegalOfficer, new { @class = "isSingleLegalOfficer", @data_singlelegalofficer = ViewBag.IsSingleLegalOfficer }) Is legal officer?
+                            </label>
+                            @Html.ValidationMessageFor(model => model.IsIntroducedAsLegalOfficer, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    @if (isAdmin)
+{
+                    <div class="form-group">
+                        <div class="col-md-3"></div>
+                        <div class="col-sm-8 checkbox">
+                            <label>@Html.EditorFor(model => model.IsActive) Is Active *</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3"></div>
+                        <div class="col-sm-8 confirmation-location @(Model.IsActive?"disabled":"")">
+                            <button class="btn btn-primary resend-email-confirmation" data-url="@Url.Action("ResendConfirmationEmail","Account",new {id=Model.ID})">Resend Confirmation Email</button> *
+                            <h5><small>* Available for Admin only</small></h5>
+                        </div>
+                    </div>
+}
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary save-profile-details-btn">Save</button>
+            </div>
+        </div>
+    </div>
+</div>

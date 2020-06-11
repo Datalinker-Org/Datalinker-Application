@@ -1,0 +1,151 @@
+﻿@model DataLinker.Models.ApplicationDetails
+@using DataLinker.Models
+@using DataLinker.Web.Helpers
+
+
+@{ var isLegalOfficer = (ViewData["LoggedInUser"] as LoggedInUserDetails).IsLegalRep;}
+    <div id="provider-service">
+        <h2>
+            @Model.Name <a href="@Url.Action("Edit", new {id = Model.ID})" class="btn btn-default edit-application-details-btn" data-app-type="Service"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit</a>
+            <span class="pull-right">
+                <a href="@ViewBag.PreviousUrl" class="btn btn-default">
+                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Back
+                </a>
+            </span>
+        </h2>
+        @if (!string.IsNullOrEmpty(Model.Description))
+        {
+            <div class="jumbotron">
+                <div class="row">
+                    @Html.RenderLineBreaks(Model.Description)
+                </div>
+            </div>
+        }
+        @if (isLegalOfficer)
+        {
+            <span class="pull-left">
+                <a href="@Url.Action("Index", "ConsumerRequests", new {applicationId = Model.ID})" class="btn btn-default">
+                    <span data-url="@Url.Action("GetBadgeData", "ConsumerRequests", new {applicationId = Model.ID})" class="consumer-requests-badge badge"></span>
+                    <span class="glyphicon glyphicon-list" aria-hidden="true"></span> Consumer Requests
+                </a>
+            </span>
+            <br />
+            <br />
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Consumer Requests</div>
+
+                        <table class="table">
+                            @if (Model.RegistrationDetails.Count == 0)
+                            {
+                                <tr><td>No registration request.</td></tr>
+                            }
+                            else
+                            {
+                                foreach (var item in Model.RegistrationDetails)
+                                {
+
+                                    <tr>
+                                        <td>
+                                            <a href="@Url.Action("ProviderLegalApprovalView", "ConsumerProviderRegistration", new { consumerProviderRegistrationId = item.ID })">
+                                                @*<a href='@string.Format("../consumer-provider-registration/{0}/provider-legal-approval", item.ID)'>*@
+                                                @Html.DisplayFor(modelItem => item.ConsumerApplicationName)
+                                            </a>
+
+                                        </td>
+                                        <td></td>
+
+                                    </tr>
+
+                                }
+                            }
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div class="row">
+            <div class="col-sm-7">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Data Endpoints @(Model.AreSchemasPresent ? "" : "(Published schemas not found)")
+                        <span class="pull-right">
+                            <a href="#" class="add-new-endpoint btn btn-default btn-sm @(Model.AreSchemasPresent ? "" : "disabled")" data-url="@Url.Action("AddProviderEndpoint", new {id = Model.ID})">
+                                <span class="glyphicon glyphicon-plus"></span> Add
+                            </a>
+                        </span>
+                    </div>
+                    <table id="application-endpoint-details" class="table" data-url="@Url.Action("Details", "Applications", new {id = Model.ID})">
+                        @if (Model.Endpoints.Count == 0)
+                        {
+                            <tr><td>No endpoints registered</td></tr>
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="2">
+                                    <div class="text-info"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Click on Agreements and Publishing to specify the Data Agreement terms</div>
+                                </td>
+                            </tr>
+                            foreach (var item in Model.Endpoints)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(model => item.Schema.Name) <a href="@Url.Action("Download","Schemas", new { fileId=item.Schema.SchemaFileId})">(Download json)</a>
+                                        <div>
+                                            <small class="side-text">Data agreement status: </small>
+                                            @Html.LicensePublishStatusLabel(item.LicenseStatus)
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="btn-group pull-right">
+                                            <a href="#" class="edit-endpoint-details btn btn-default btn-sm" data-url="@Url.Action("EditProviderEndpoint", new {endpointId = item.ID})">
+                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit
+                                            </a>
+                                            <a href="@Url.Action("Index", "Licenses", new {appId=Model.ID, schemaId = item.Schema.DataSchemaID})" class="btn btn-default btn-sm @(Model.IsLicenseTemplatePresent ? "" : "disabled")" title="Go to data agreement">
+                                                <span class="glyphicon glyphicon-book" aria-hidden="true"></span> Agreements & Publishing
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </table>
+                </div>
+            </div>
+            <div class="col-sm-5">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Authentication Endpoints
+                        <span class="pull-right">
+                            <a href="#" id="edit-service-authentication" class="btn btn-default btn-sm" data-url="@Url.Action("EditApplicationAuthentication", new {id = Model.ID})">
+                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit
+                            </a>
+                        </span>
+                    </div>
+                    <div id="application-auth-details" class="authDetail" data-url="@Url.Action("GetApplicationAuthentication", new {id = Model.ID})">
+                        @Html.Partial("_ApplicationAuthentication", Model.AuthDetails)
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Registered Hosts
+                        <span class="pull-right">
+                            <a href="#" id="add-service-host" class="btn btn-default btn-sm" data-toggle="modal" data-target="#add-new-application-host" data-url="@Url.Action("AddNewHost", "Applications", new {id = Model.ID})">
+                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add
+                            </a>
+                        </span>
+                    </div>
+                    <table id="application-host-details" class="table" data-url="@Url.Action("GetApplicationHosts", "Applications", new {id = Model.ID})">
+                        @Html.Partial("_ApplicationHosts", Model.Hosts)
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="edit-application-auth-modal-location"></div>
+        <div class="add-schema-endpoint-modal-location"></div>
+    </div>

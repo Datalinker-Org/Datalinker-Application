@@ -1,0 +1,79 @@
+﻿@model DataLinker.Services.Emails.Models.ConsumerProviderRegistrations.ConsumerLegalApprovalEmail
+Content-Type: text/html; charset=utf-8
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="@Model.UrlToStylesFile">
+</head>
+<body>
+    <table border="0" cellpadding="0" cellspacing="0" width="600">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td height="60" class="container-logo responsive-image">
+                            <img src="@Model.UrlToImageInEmail" width="60" alt="dataLinker" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 30px 30px 0px 30px; vertical-align: top">
+                            <div style="font-size: 24px; color: #444; padding-bottom: 20px; font-weight: bold;">Request pending approval</div>
+                            <div style="font-size: 14px;">
+                                <p>Hello @Model.Name,</p>
+                                <p>
+                                    @Model.ConsumerOrganizationName has provisionally registered to request access for @Model.SchemaName from @Model.ProviderOrganizationName. You are the registered authorised signatory for @Model.ConsumerOrganizationName.
+                                    Please review the licence terms of the provider and use <a href="@Model.LinkToConfirmationScreen">this link</a> to approve on behalf of @Model.ConsumerOrganizationName the request to provider's data.
+                                    NOTE this link may only be used once, so please review the terms first before accessing the link. The link will expire at @DateTime.Now.AddDays(7).
+                                </p>
+                                <p>
+                                    Approval of this request will notify the provider about your request. On their approval, a License Agreement will be executed between your organization and the provider organization to share @Model.SchemaName data.
+                                    Without limiting DataLinker’s Terms of Use, it is your responsibility to determine that this Licence Agreement meets the needs of your business and is suitable for the purpose for which it is intended to be used. You should consider taking professional advice to ensure this is the case. DataLinker accepts no liability arising from your use of or reliance on a Licence Agreement.
+                                    Please visit the DataLinker website for more information, or contact us if you have any questions.
+                                </p>
+                                <p>
+                                    Attached Licence Document for Review
+                                    This document records the terms that @Model.ProviderOrganizationName specifies as a data provider using the DataLinker service. It does not yet constitute a Licence Agreement with another party.
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 20px 30px 30px 30px; vertical-align: top">
+                            <div style="font-size: 14px; color: #767676">
+                                If you require help, please don't hesitate to contact us by email: <a href="mailto:@(Model.DataLinkerEmail)" class="email" style="color: #5f5f5f;">@Model.DataLinkerEmail</a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td bgcolor="#1C6C8A" style="padding: 15px 0 15px 30px; color: #FFFFFF;" height="50">
+                            <table border="0" cellpadding="0" cellspacing="0" align="left" width="49%">
+                                <tr>
+                                    <td>
+                                        <div class="footer">
+                                            <a href="@Model.DataLinkerHost" class="email">www.datalinker.org</a>
+                                            <br>
+                                            <span style="color: white">Email us to</span> <a href="mailto:@(Model.DataLinkerEmail)" class="email">@Model.DataLinkerEmail</a>
+                                            <br>
+                                            <br>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table border="0" cellpadding="0" cellspacing="0" align="right" width="49%">
+                                <tr>
+                                    <td>
+                                        <div class="footer"></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

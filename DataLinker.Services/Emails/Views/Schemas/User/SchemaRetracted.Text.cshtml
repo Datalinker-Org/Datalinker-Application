@@ -1,0 +1,11 @@
+﻿@model DataLinker.Services.Emails.Models.SchemaRetractedEmail
+Content-Type: text/plain; charset=utf-8
+
+Hello @Model.Name,
+
+DataLinker has retracted @Model.SchemaName and this schema can no longer be selected for provision or receipt of data.
+[Note that existing data sharing agreements between DataLinker users that utilise this schema may continue.]
+
+@Model.DataLinkerHost
+Contact us: @Model.DataLinkerEmail
+

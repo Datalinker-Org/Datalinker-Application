@@ -1,0 +1,82 @@
+﻿@using DataLinker.Web.Helpers
+@using PagedList.Mvc;
+
+@model DataLinker.Web.Models.Licenses.ProviderLicensesModel
+
+
+<h2>
+    Licenses for @Model.SchemaName
+    <span class="pull-right">
+        <a href="@ViewBag.PreviousUrl" class="btn btn-default">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Back
+        </a>
+    </span>
+</h2>
+<div class="jumbotron">
+    <div class="text-info"> <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Click on Send to Legal which will submit your Data Agreement to your Legal officer for approval. After approval you will need to Publish the Data Agreement. You can have only one Published agreement at a time. To publish a new one you should retract existing first(if any).</div>
+</div>
+<span class="pull-left">
+    <a href="@Url.Action("Create", "Licenses", null)" class="btn btn-success">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add
+    </a>
+</span>
+<br />
+<br />
+<div id="licensesUI">
+    @if (!Model.Items.Any())
+    {
+        <h4>There are no licenses to display</h4>
+    }
+    else
+    {
+        <table class="table">
+            <tr>
+                <th>
+                    Data Agreements
+                </th>
+                <th></th>
+            </tr>
+            @foreach (var item in Model.Items)
+            {
+                <tr>
+                    <td>
+                        @(item.IsCustom ? item.OrgName.ToUpper() : item.TemplateName.ToUpper())
+                        @Html.LicensePublishStatusLabel(item.Status,isProvider:Model.IsProvider)
+                        <div><small class="side-text">Created at: @item.CreatedAt.ToDisplayDate()</small></div>
+                    </td>
+                    <td>
+                        <span class="btn-group pull-right">
+                            <a href="#" class="retract btn btn-default btn-sm @(item.IsRetracted ? "disabled" : "")" title="Retract license" data-url="@Url.Action("Retract","Licenses", new {id = item.ID})">
+                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Retract
+                            </a>
+                            <a href="@Url.Action("Download","Licenses", new {id = item.ID})" class="btn btn-default btn-sm" title="Download">
+                                <span class="glyphicon glyphicon-download-alt"></span> Download
+                            </a>
+                            <a href="@Url.Action("MoveToDraft","Licenses", new {id = item.ID})" class="to-draft btn btn-default btn-sm @(item.IsReadyToPublish || item.IsPendingApproval ? "" : "disabled")" title="Move to Draft">
+                                <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> To draft
+                            </a>
+                            <a href="#" class="sendForLegalApproval btn btn-default btn-sm @(item.IsDraft ? "" : "disabled")" title="Send license for Legal Approval" data-show-dialog="@(Model.AnyInVerificationProcess)" data-url="@Url.Action("SendToLegalOfficer","Licenses", new {id = item.ID})">
+                                <span class="glyphicon glyphicon-send" aria-hidden="true"></span> Send to legal
+                            </a>
+                            <a href="#" class="publish btn btn-default btn-sm @(item.IsReadyToPublish && (!Model.AnyPublished || (item.IsCustom && !Model.IsProvider)) ? "" : "disabled")" data-url="@Url.Action("Publish","Licenses", new {id = item.ID})">
+                                <span class="glyphicon glyphicon-upload" aria-hidden="true"></span>@(Model.IsProvider? " Publish": " Finalize")
+                            </a>
+                        </span>
+                    </td>
+                </tr>
+            }
+
+        </table>
+        if (Model.Items.PageCount > 1)
+        {
+            <div>
+                @Html.PagedListPager(Model.Items, page => Url.Action("Index", "Licenses", new { page }))
+            </div>
+        }
+    }
+    @Html.Partial("_HelpDetails")
+</div>
+@section scripts
+{
+    @Html.InitPageMainModule("licenses")
+}

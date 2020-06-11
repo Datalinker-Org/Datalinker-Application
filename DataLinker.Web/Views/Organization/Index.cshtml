@@ -1,0 +1,59 @@
+﻿@using DataLinker.Web.Helpers
+@using PagedList.Mvc
+@model PagedList.IPagedList<DataLinker.Models.OrganizationModel>
+
+<h2>
+    Organizations    <span class="pull-right">
+        <a href="@ViewBag.PreviousUrl" class="btn btn-default">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Back
+        </a>
+    </span>
+</h2>
+<div class="jumbotron">
+    <p style="margin: 0 0 0">
+        Manage organizations on this page. Change status for them.
+    </p>
+</div>
+<div id="organization-ui">
+    <table class="table">
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Is Active
+            </th>
+            <th></th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.CheckBoxFor(modelItem => item.IsActive, new {@class = "organization-status", data_organizationid = item.ID, data_url = Url.Action("ChangeStatus",new {id=item.ID })})
+                </td>
+                <td></td>
+                <td>
+                    <span class="btn-group pull-right">
+                        <a href="@Url.Action("Index", "Account", new {organizationId = item.ID}, null)" class="btn btn-default btn-sm">
+                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Members
+                        </a>
+                    </span>
+                </td>
+            </tr>
+        }
+    </table>
+    @if (Model.PageCount > 1)
+    {
+        @Html.PagedListPager(Model, page => Url.Action("Index",
+            new {page}))
+    }
+</div>
+@section scripts
+{
+    @Html.InitPageMainModule("organisation")
+}
